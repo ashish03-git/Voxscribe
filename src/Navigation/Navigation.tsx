@@ -8,6 +8,7 @@ import {
 import LoginScreen from '../Authentication/Login/LoginScreen';
 import RegistrationScreen from '../Authentication/Registration/RegistrationScreen';
 import HomeScreen from '../Main Screens/Home/HomeScreen';
+import TabScreens from './TabScreens';
 
 const Stack = createStackNavigator();
 
@@ -21,7 +22,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="loginScreen"
+        initialRouteName="tabScreens"
         screenOptions={{
           gestureDirection: 'horizontal',
           transitionSpec: {
@@ -70,6 +71,12 @@ const Navigation = () => {
           name="homeScreen"
           options={{headerShown: false}}
           component={HomeScreen}
+        />
+
+        <Stack.Screen
+          name="tabScreens"
+          component={TabScreens}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
