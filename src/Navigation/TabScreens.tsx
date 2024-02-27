@@ -71,11 +71,11 @@ const TabScreens = () => {
         }}
       />
       <Tab.Screen
-        name="chatScreen"
-        component={ChatScreen}
+        name="chat"
+        component={HomeScreen}
         options={{
           headerShown: false,
-          tabBarLabel: 'Chat',
+          tabBarLabel: 'Chats',
           tabBarInactiveTintColor: '#C7C7C7',
           tabBarLabelStyle: {
             fontSize: responsiveFontSize(1.8),

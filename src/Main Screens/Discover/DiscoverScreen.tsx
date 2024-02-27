@@ -1,4 +1,4 @@
-import {View, Text, Button, Circle, Checkbox} from 'tamagui';
+import {View, Text, Button} from 'tamagui';
 import React from 'react';
 import styles from './styles';
 import {ChevronLeftCircle, PlusCircle} from '@tamagui/lucide-icons';

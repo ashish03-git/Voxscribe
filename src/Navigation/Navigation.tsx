@@ -9,6 +9,7 @@ import LoginScreen from '../Authentication/Login/LoginScreen';
 import RegistrationScreen from '../Authentication/Registration/RegistrationScreen';
 import HomeScreen from '../Main Screens/Home/HomeScreen';
 import TabScreens from './TabScreens';
+import ChatScreen from '../Main Screens/Chat/ChatScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,7 +23,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="tabScreens"
+        initialRouteName="chatScreen"
         screenOptions={{
           gestureDirection: 'horizontal',
           transitionSpec: {
@@ -71,6 +72,12 @@ const Navigation = () => {
           name="homeScreen"
           options={{headerShown: false}}
           component={HomeScreen}
+        />
+
+        <Stack.Screen
+          name="chatScreen"
+          options={{headerShown: false}}
+          component={ChatScreen}
         />
 
         <Stack.Screen

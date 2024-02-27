@@ -18,8 +18,14 @@
         android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.intent.action.DIAL" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+      <!-- <queries>
+      <intent>
+        <action android:name="android.intent.action.DIAL" />
+      </intent>
+      </queries> -->
     </application>
 </manifest>

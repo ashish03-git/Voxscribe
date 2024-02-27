@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   continueBtn: {
     width: responsiveWidth(94),
-    height: responsiveHeight(6.5),
+    height: responsiveHeight(7),
     borderRadius: responsiveWidth(10),
     backgroundColor: Colors.purple,
   },
