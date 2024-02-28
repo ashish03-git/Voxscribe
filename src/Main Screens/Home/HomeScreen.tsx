@@ -13,17 +13,23 @@ import {
   Users,
   User,
   BadgeDollarSign,
-  Trophy
+  Trophy,
 } from '@tamagui/lucide-icons';
 import Colors from '../../Extra/Colors';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackNavigationList} from '../../Navigation/Navigation';
+import {StackNavigationProp} from '@react-navigation/stack';
+
+type StackScreenNavigationList = StackNavigationProp<
+  typeof RootStackNavigationList
+>;
 
 const HomeScreen: React.FC = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackScreenNavigationList>();
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
-      <View backgroundColor={'$white3'} flex={1}>
+      <View backgroundColor={'$white2'} flex={1}>
         <View style={styles.personalDetailsContainer}>
           <View style={styles.nameContainer}>
             <Text style={styles.greetingTxt}>Hey!</Text>
@@ -31,7 +37,11 @@ const HomeScreen: React.FC = () => {
           </View>
           <View style={styles.profileContainer}>
             <View backgroundColor={'$white1'} style={styles.circleContainer}>
-              <User2 size={'$5'} color={Colors.purple} />
+              <User2
+                size={'$5'}
+                color={Colors.purple}
+                onPress={() => navigation.navigate('profileScreen')}
+              />
             </View>
           </View>
         </View>
@@ -53,7 +63,7 @@ const HomeScreen: React.FC = () => {
             </View>
             <View style={styles.rightArrowContainer}>
               <ChevronRight
-                onPress={() => navigation.navigate("customeDialerScreen")}
+                onPress={() => navigation.navigate('customeDialerScreen')}
                 size={'$2'}
                 color={'$white1'}
               />
@@ -89,12 +99,9 @@ const HomeScreen: React.FC = () => {
           <View style={styles.otherContainerTwo}>
             <View style={styles.unlimilatedContainer}>
               <View style={{flex: 1}} alignItems="center">
-                <Circle
-                  size={'$8'}
-                  backgroundColor={'$white3'}
-                  margin="$3">
-                    <BadgeDollarSign size={"$4"} color={"gold"} />
-                  </Circle>
+                <Circle size={'$8'} backgroundColor={'$white3'} margin="$3">
+                  <BadgeDollarSign size={'$4'} color={'gold'} />
+                </Circle>
               </View>
               <View style={{flex: 2}} justifyContent="center">
                 <Text fontSize={'$7'} fontWeight={'bold'}>

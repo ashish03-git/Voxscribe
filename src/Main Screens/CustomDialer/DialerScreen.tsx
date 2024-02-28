@@ -1,4 +1,7 @@
 import {
+  ChevronDown,
+  ChevronDownCircle,
+  ChevronDownSquare,
   Delete,
   Grid,
   PanelBottomClose,
@@ -9,7 +12,7 @@ import {
 import React, {useState} from 'react';
 import HapticFeedback from 'react-native-haptic-feedback';
 import {FlatList} from 'react-native';
-import {View, Text, Button, Circle} from 'tamagui';
+import {View, Text, Button, Circle, Square} from 'tamagui';
 import {
   ChevronLeftCircle,
   Pencil,
@@ -55,12 +58,12 @@ const DialerScreen = () => {
   };
 
   const handleDelete = () => {
-    setOpenDialer(false);
     setPhoneNumber(phoneNumber.slice(0, -1));
   };
 
   return (
     <View backgroundColor={'$white2'} style={styles.container}>
+
       {/* header */}
       <View backgroundColor={'$white1'} style={styles.headerContainer}>
         <ChevronLeftCircle
@@ -99,15 +102,17 @@ const DialerScreen = () => {
       {openDialer ? (
         <>
           <View style={styles.inputContainer}>
-            <View flex={3}>
+            <View flex={3} alignItems="center">
               <Text color={'green'} style={styles.dialedNumberTxt}>
                 {phoneNumber}
               </Text>
             </View>
 
-            <Circle size={'$5'} backgroundColor={'$purple9'}>
-              <PanelBottomClose size={'$1.5'} color={'white'} />
-            </Circle>
+            <ChevronDownCircle
+              size={'$3'}
+              color={'$gray9'}
+              onPress={() => setOpenDialer(false)}
+            />
           </View>
           <View style={styles.dialerContainer}>
             <View style={styles.row}>
@@ -130,29 +135,30 @@ const DialerScreen = () => {
                 style={styles.deleteButton}
                 backgroundColor={'$red11Dark'}
                 onPress={handleDelete}>
-                <Delete size={'$3'} color="white" />
+                <Delete size={'$2.5'} color="white" />
               </Button>
               <DialerButton number="0" onPress={handleNumberPress} />
               <Button
                 style={styles.callButton}
                 backgroundColor={'$green11Dark'}
                 onPress={() => handleDial}>
-                <PhoneCall size={'$3'} color="white" />
+                <PhoneCall size={'$2.5'} color="white" />
               </Button>
             </View>
           </View>
         </>
       ) : null}
+
     </View>
   );
 };
 
-const DialerButton = ({number, onPress}: {number: any; onPress: any}) => {
+const DialerButton = ({number, onPress}: {number: string; onPress: any}) => {
   const options = {
     enableVibrateFallback: true,
     ignoreAndroidSystemSettings: false,
   };
-  HapticFeedback.trigger('keyboardPress');
+  HapticFeedback.trigger('keyboardPress',options);
   return (
     <Button
       style={styles.button}

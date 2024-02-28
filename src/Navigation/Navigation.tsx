@@ -19,14 +19,15 @@ export const RootStackNavigationList = {
   registerScreen: undefined,
   homeScreen: undefined,
   customeDialerScreen: undefined,
-  discoverScreen:undefined
+  discoverScreen:undefined,
+  profileScreen:undefined
 };
 
 const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="tabScreens"
+        initialRouteName="loginScreen"
         screenOptions={{
           gestureDirection: 'horizontal',
           transitionSpec: {
@@ -80,6 +81,7 @@ const Navigation = () => {
           options={{headerShown: false}}
           component={ChatScreen}
         />
+        
         <Stack.Screen
           name="customeDialerScreen"
           options={{headerShown: false}}
