@@ -23,18 +23,25 @@ const styles = StyleSheet.create({
   },
   selectedContainer: {
     flex: 1,
-    justifyContent: 'center',
+    flexDirection:"row",
+    justifyContent: 'space-around',
     alignItems: 'center',
     // backgroundColor: 'yellow',
   },
+  searchInput: {
+    width: responsiveWidth(78),
+    height: responsiveHeight(6),
+    borderRadius: responsiveWidth(3),
+    borderWidth: 1,
+  },
   availableContactsContainer: {
-    flex: 6,
+    flex: 8,
     alignItems: 'center',
     // backgroundColor: 'pink',
   },
   contactListContainer: {
     flexDirection: 'row',
-    elevation:1,
+    elevation: 1,
     width: responsiveWidth(96),
     height: responsiveHeight(10),
     marginVertical: responsiveWidth(2),
@@ -49,7 +56,7 @@ const styles = StyleSheet.create({
   },
   contactDetailsContainer: {
     flex: 3,
-    paddingLeft:responsiveWidth(2),
+    paddingLeft: responsiveWidth(2),
     justifyContent: 'center',
   },
   contactNameTxt: {
@@ -59,8 +66,8 @@ const styles = StyleSheet.create({
   },
   selectContactContainer: {
     flex: 1,
-    justifyContent:"center",
-    alignItems:"center",
+    justifyContent: 'center',
+    alignItems: 'center',
     // backgroundColor: 'red',
   },
   continueBtnContainer: {

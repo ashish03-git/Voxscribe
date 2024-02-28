@@ -8,7 +8,7 @@ import Colors from '../../Extra/Colors';
 
 const styles = StyleSheet.create({
   sendButtonContainer: {
-    margin:responsiveWidth(4),
+    margin:responsiveWidth(5),
     marginLeft:0,
     alignSelf:"center",
     backgroundColor: Colors.purple,

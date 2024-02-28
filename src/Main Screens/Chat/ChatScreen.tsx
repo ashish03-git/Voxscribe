@@ -64,9 +64,11 @@ const ChatScreen: React.FC = () => {
   };
 
   const renderBubble = ({props}: any) => {
+    const user = {};
     return (
       <Bubble
         {...props}
+        user={user}
         wrapperStyle={{
           right: {
             borderRadius: responsiveWidth(2),
@@ -109,7 +111,7 @@ const ChatScreen: React.FC = () => {
         showUserAvatar={true}
         // renderTime={renderTime}
         renderBubble={renderBubble}
-        renderSend={renderSend}
+        // renderSend={renderSend}
         messages={message}
         showAvatarForEveryMessage={true}
         // isKeyboardInternallyHandled={false}
@@ -117,7 +119,7 @@ const ChatScreen: React.FC = () => {
         alwaysShowSend={true}
         infiniteScroll={true}
         // showAvatarForEveryMessage={true}
-        // renderUsernameOnMessage={true}
+        renderUsernameOnMessage={true}
 
         renderAvatarOnTop={true}
         isCustomViewBottom={true}

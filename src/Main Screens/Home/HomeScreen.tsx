@@ -16,8 +16,10 @@ import {
   Trophy
 } from '@tamagui/lucide-icons';
 import Colors from '../../Extra/Colors';
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen: React.FC = () => {
+  const navigation = useNavigation()
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
@@ -51,7 +53,7 @@ const HomeScreen: React.FC = () => {
             </View>
             <View style={styles.rightArrowContainer}>
               <ChevronRight
-                onPress={() => console.log('move right')}
+                onPress={() => navigation.navigate("customeDialerScreen")}
                 size={'$2'}
                 color={'$white1'}
               />

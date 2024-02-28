@@ -1,8 +1,8 @@
-import {View, Text, Button} from 'tamagui';
+import {View, Text, Button, Input, Circle} from 'tamagui';
 import React from 'react';
 import styles from './styles';
-import {ChevronLeftCircle, PlusCircle} from '@tamagui/lucide-icons';
-import {FlatList} from 'react-native';
+import {ChevronLeftCircle, PlusCircle, Search} from '@tamagui/lucide-icons';
+import {FlatList, TextInput} from 'react-native';
 import ContactItem from './ContactItem';
 import {useNavigation} from '@react-navigation/native';
 
@@ -14,21 +14,26 @@ const DiscoverScreen: React.FC = () => {
       {/* header container */}
       <View style={styles.headerContainer}>
         <ChevronLeftCircle
-          size={'$3.5'}
-          color={'$gray9'}
+          size={'$3'}
+          color={'$gray10'}
           onPress={() => navigation.goBack()}
         />
-        <PlusCircle size={'$5'} color={'$purple9'} />
+        {/* <PlusCircle size={'$5'} color={'$purple9'} /> */}
       </View>
-      {/* selecte item heading text */}
+
+      {/* search input field */}
       <View style={styles.selectedContainer}>
-        <Text fontWeight={'bold'} fontSize={'$8'}>
-          Select With Whom You Want{' '}
-        </Text>
-        <Text fontWeight={'bold'} fontSize={'$8'}>
-          To Start Conversation
-        </Text>
+        <Input
+          fontSize="$6"
+          placeholder="search here ..."
+          style={styles.searchInput}
+          borderRadius="$10"
+        />
+        <Circle size={'$4.5'} backgroundColor={'$white5'}>
+          <Search size={'$1'} color={'$purple9'} />
+        </Circle>
       </View>
+
       {/* list of contacts  */}
       <View style={styles.availableContactsContainer}>
         <FlatList
@@ -37,6 +42,7 @@ const DiscoverScreen: React.FC = () => {
           renderItem={({item}) => <ContactItem />}
         />
       </View>
+
       {/* button container */}
       <View style={styles.continueBtnContainer}>
         <Button style={styles.continueBtn}>

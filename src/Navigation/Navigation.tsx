@@ -10,6 +10,7 @@ import RegistrationScreen from '../Authentication/Registration/RegistrationScree
 import HomeScreen from '../Main Screens/Home/HomeScreen';
 import TabScreens from './TabScreens';
 import ChatScreen from '../Main Screens/Chat/ChatScreen';
+import DialerScreen from '../Main Screens/CustomDialer/DialerScreen';
 
 const Stack = createStackNavigator();
 
@@ -17,28 +18,28 @@ export const RootStackNavigationList = {
   loginScreen: undefined,
   registerScreen: undefined,
   homeScreen: undefined,
+  customeDialerScreen: undefined,
+  discoverScreen:undefined
 };
 
 const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="chatScreen"
+        initialRouteName="tabScreens"
         screenOptions={{
           gestureDirection: 'horizontal',
           transitionSpec: {
             open: {
-              animation: 'spring',
+              animation: 'timing',
               config: {
-                stiffness: 1000, // Adjust stiffness as needed
-                damping: 500, // Adjust damping as needed
+                duration: 300,
               },
             },
             close: {
-              animation: 'spring',
+              animation: 'timing',
               config: {
-                stiffness: 1000, // Adjust stiffness as needed
-                damping: 500, // Adjust damping as needed
+                duration: 300,
               },
             },
           },
@@ -78,6 +79,11 @@ const Navigation = () => {
           name="chatScreen"
           options={{headerShown: false}}
           component={ChatScreen}
+        />
+        <Stack.Screen
+          name="customeDialerScreen"
+          options={{headerShown: false}}
+          component={DialerScreen}
         />
 
         <Stack.Screen

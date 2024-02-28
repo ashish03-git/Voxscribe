@@ -74,8 +74,13 @@ android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
-
     namespace "com.voxscribe"
+
+// stream dependencies
+    compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_11
+    }
     defaultConfig {
         applicationId "com.voxscribe"
         minSdkVersion rootProject.ext.minSdkVersion
