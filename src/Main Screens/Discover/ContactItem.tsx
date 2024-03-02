@@ -3,7 +3,18 @@ import React from 'react';
 import styles from './styles';
 import {User2, Dot} from '@tamagui/lucide-icons';
 
-const ContactItem = () => {
+interface ListItemProp {
+  item: {
+    givenName?: string;
+    number?: [{}];
+  };
+}
+
+const ContactItem: React.FC<ListItemProp> = ({item}) => {
+  // console.log((item));
+  let singleContactNumber = item.number?.[0]
+
+
   return (
     <View style={styles.contactListContainer}>
       <View style={styles.contactProfileContainer}>
@@ -12,9 +23,9 @@ const ContactItem = () => {
         </Circle>
       </View>
       <View style={styles.contactDetailsContainer}>
-        <Text style={styles.contactNameTxt}>Ashish Yadav</Text>
+        <Text style={styles.contactNameTxt}>{item.givenName}</Text>
         <Text fontSize={'$4'} color={'$gray10'}>
-          +91 9730502488
+          +91 {singleContactNumber}
         </Text>
       </View>
       <View style={styles.selectContactContainer}>

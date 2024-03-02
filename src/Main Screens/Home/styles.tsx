@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
   },
   otherServicesContainer: {
     flex: 5,
+    marginHorizontal:responsiveWidth(2)
     // backgroundColor:"yellow"
   },
   otherContainerOne: {
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     width: responsiveWidth(45),
     height: responsiveHeight(25),
     borderRadius: responsiveWidth(3),
-    backgroundColor: Colors.white,
+    // backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -97,10 +98,10 @@ const styles = StyleSheet.create({
   },
   unlimilatedContainer: {
     flexDirection:"row",
-    width: responsiveWidth(96),
+    width: responsiveWidth(92),
     height: responsiveHeight(18),
     borderRadius: responsiveWidth(3),
-    backgroundColor: Colors.white,
+    // backgroundColor: Colors.white,
   },
 });
 

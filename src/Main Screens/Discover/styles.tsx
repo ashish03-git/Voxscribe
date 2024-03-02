@@ -8,7 +8,7 @@ import {
 import Colors from '../../Extra/Colors';
 
 const styles = StyleSheet.create({
-  constainer: {
+  container: {
     width: responsiveWidth(100),
     height: responsiveHeight(100),
     backgroundColor: 'white',
@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
   headerContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     // backgroundColor: 'red',
     paddingHorizontal: responsiveWidth(4),
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   availableContactsContainer: {
-    flex: 8,
+    flex: 7,
     alignItems: 'center',
     // backgroundColor: 'pink',
   },
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
   },
   continueBtnContainer: {
     flex: 2,
-    paddingTop: responsiveWidth(4),
+    // paddingTop: responsiveWidth(4),
     alignItems: 'center',
   },
   continueBtn: {

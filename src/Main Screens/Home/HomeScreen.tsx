@@ -29,14 +29,14 @@ const HomeScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
-      <View backgroundColor={'$white2'} flex={1}>
+      <View backgroundColor={'$white1'} flex={1}>
         <View style={styles.personalDetailsContainer}>
           <View style={styles.nameContainer}>
             <Text style={styles.greetingTxt}>Hey!</Text>
             <Text style={styles.nameTxt}>Ashish</Text>
           </View>
           <View style={styles.profileContainer}>
-            <View backgroundColor={'$white1'} style={styles.circleContainer}>
+            <View backgroundColor={'$white3'} style={styles.circleContainer}>
               <User2
                 size={'$5'}
                 color={Colors.purple}
@@ -73,8 +73,8 @@ const HomeScreen: React.FC = () => {
         {/* bottom container  */}
         <View style={styles.otherServicesContainer}>
           <View style={styles.otherContainerOne}>
-            <View style={styles.commonContainer}>
-              <Circle size={'$9'} backgroundColor={'$white2'} margin={'$4'}>
+            <View backgroundColor={'$white2'} style={styles.commonContainer}>
+              <Circle size={'$9'} backgroundColor={'$white1'} margin={'$4'}>
                 <User size={'$4'} color={Colors.purple} />
               </Circle>
               <Text fontSize={'$7'} fontWeight={'bold'}>
@@ -84,8 +84,8 @@ const HomeScreen: React.FC = () => {
                 Translation
               </Text>
             </View>
-            <View style={styles.commonContainer}>
-              <Circle size={'$9'} backgroundColor={'$white2'} margin={'$4'}>
+            <View backgroundColor={'$white2'} style={styles.commonContainer}>
+              <Circle size={'$9'} backgroundColor={'$white1'} margin={'$4'}>
                 <Users size={'$4'} color={Colors.purple} />
               </Circle>
               <Text fontSize={'$7'} fontWeight={'bold'}>
@@ -97,7 +97,9 @@ const HomeScreen: React.FC = () => {
             </View>
           </View>
           <View style={styles.otherContainerTwo}>
-            <View style={styles.unlimilatedContainer}>
+            <View
+              backgroundColor={'$white2'}
+              style={styles.unlimilatedContainer}>
               <View style={{flex: 1}} alignItems="center">
                 <Circle size={'$8'} backgroundColor={'$white3'} margin="$3">
                   <BadgeDollarSign size={'$4'} color={'gold'} />

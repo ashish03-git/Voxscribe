@@ -1,13 +1,14 @@
-import React from 'react';
-import {View, Text, Button} from 'tamagui';
+import React, {useEffect} from 'react';
+import {View, Text, Button, Input} from 'tamagui';
 import {Facebook, Github, Phone, Twitter} from '@tamagui/lucide-icons';
 import {SafeAreaView} from 'react-native';
-import {Input,Icon} from '@rneui/themed';
+import {Icon} from '@rneui/themed';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackNavigationList} from '../../Navigation/Navigation';
 import {responsiveWidth} from 'react-native-responsive-dimensions';
 import {useNavigation} from '@react-navigation/native';
+import {loginWithGoogle} from '../Social Login/loginWithGoogle';
 
 type RegisterScreenProps = StackNavigationProp<
   typeof RootStackNavigationList,
@@ -16,12 +17,15 @@ type RegisterScreenProps = StackNavigationProp<
 
 const RegistrationScreen: React.FC = () => {
   const navigation = useNavigation<RegisterScreenProps>();
+  let handleRegistrationWithGoogle = loginWithGoogle();
+
   return (
     <SafeAreaView style={styles.container}>
-      <View flex={1} backgroundColor={'$purple9'}>
+      <View flex={1} backgroundColor={'$white1'}>
         {/* Top Container */}
         <View style={styles.topContainer}>
           <Button
+            backgroundColor={'$white2'}
             onPress={() => navigation.navigate('loginScreen')}
             style={styles.registerBtn}>
             <Text style={styles.registerBtnTxt}>Click To Login</Text>
@@ -32,58 +36,32 @@ const RegistrationScreen: React.FC = () => {
         <View backgroundColor={'white'} style={styles.bottomContainer}>
           <View style={styles.logoContainer}>
             <Text color={'$purple9'} style={styles.logoTxt}>
-              VOCXCIBE
+              Account Register
             </Text>
           </View>
 
           {/* Input field and Button Container */}
-          <View flex={5} justifyContent="center" alignItems="center">
-            <Input
-              placeholder="Enter Name"
-              label="Name"
-              labelStyle={{color: '#8E4EC6', marginBottom: responsiveWidth(2)}}
-              inputContainerStyle={styles.inputField}
-            />
-            <Input
-              placeholder="Enter Email"
-              label="Email"
-              passwordRules={
-                'mix of Uppercase, lowercase,numbers and special characters'
-              }
-              labelStyle={{color: '#8E4EC6', marginBottom: responsiveWidth(2)}}
-              inputContainerStyle={styles.inputField}
-            />
-            <Input
-              placeholder="Enter Number"
-              label="Number"
-              passwordRules={
-                'mix of Uppercase, lowercase,numbers and special characters'
-              }
-              labelStyle={{color: '#8E4EC6', marginBottom: responsiveWidth(2)}}
-              inputContainerStyle={styles.inputField}
-            />
-            <Input
-              placeholder="Enter Password"
-              label="Password"
-              passwordRules={
-                'mix of Uppercase, lowercase,numbers and special characters'
-              }
-              labelStyle={{color: '#8E4EC6', marginBottom: responsiveWidth(2)}}
-              inputContainerStyle={styles.inputField}
-            />
+          <View flex={6} justifyContent="center" alignItems="center">
+            <Input placeholder="Enter Name" style={styles.inputField} />
+            <Input placeholder="Enter Email" style={styles.inputField} />
+            <Input placeholder="Enter Number" style={styles.inputField} />
+            <Input placeholder="Enter Password" style={styles.inputField} />
 
             <Button style={styles.btnStyle}>
               <Text style={styles.btnTxt}>Register</Text>
             </Button>
 
-            <Text fontSize="$6" margin="$3">
+            <Text fontSize="$5" margin="$3">
               or continue with
             </Text>
           </View>
 
           {/* Social Icon Container */}
           <View style={styles.socialIconContainer}>
-          <Button style={styles.icon}>
+            <Button
+              onPress={handleRegistrationWithGoogle}
+              backgroundColor={'$white2'}
+              style={styles.icon}>
               <Icon
                 size={responsiveWidth(10)}
                 name="google"
@@ -91,10 +69,10 @@ const RegistrationScreen: React.FC = () => {
                 color="#8E4EC6"
               />
             </Button>
-            <Button style={styles.icon}>
+            <Button backgroundColor={'$white2'} style={styles.icon}>
               <Facebook size={'$3.5'} color={'$purple9'} />
             </Button>
-            <Button style={styles.icon}>
+            <Button backgroundColor={'$white2'} style={styles.icon}>
               <Twitter size={'$3.5'} color={'$purple9'} />
             </Button>
           </View>

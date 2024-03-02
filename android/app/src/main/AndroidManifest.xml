@@ -4,7 +4,6 @@
 <uses-feature android:name="android.hardware.camera.autofocus" />
 <uses-feature android:name="android.hardware.audio.output" />
 <uses-feature android:name="android.hardware.microphone" />
-
 <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,6 +14,11 @@
 <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
 <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
 
+
+<!-- contact permission -->
+<uses-permission android:name="android.permission.WRITE_CONTACTS" />
+ <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
@@ -22,6 +26,10 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
+
+ <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+    <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

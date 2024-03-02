@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   profileItemsContainer: {
     flexDirection: 'row',
-    width: responsiveScreenWidth(96),
+    width: responsiveScreenWidth(94),
     height: responsiveScreenHeight(7),
     borderRadius: responsiveScreenWidth(3),
     marginVertical: responsiveScreenWidth(1),
@@ -59,8 +59,18 @@ const styles = StyleSheet.create({
   cheveronIconContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     paddingRight: 10,
+  },
+  logoutButton: {
+    marginBottom: responsiveScreenWidth(6),
+    width: responsiveScreenWidth(90),
+    height: responsiveScreenHeight(6),
+    margin: 10,
+    flexDirection:'row',
+    borderRadius: responsiveScreenWidth(10),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

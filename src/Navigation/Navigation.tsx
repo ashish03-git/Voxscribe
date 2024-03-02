@@ -11,6 +11,7 @@ import HomeScreen from '../Main Screens/Home/HomeScreen';
 import TabScreens from './TabScreens';
 import ChatScreen from '../Main Screens/Chat/ChatScreen';
 import DialerScreen from '../Main Screens/CustomDialer/DialerScreen';
+import Testing from '../Extra/Testing';
 
 const Stack = createStackNavigator();
 
@@ -19,8 +20,9 @@ export const RootStackNavigationList = {
   registerScreen: undefined,
   homeScreen: undefined,
   customeDialerScreen: undefined,
-  discoverScreen:undefined,
-  profileScreen:undefined
+  discoverScreen: undefined,
+  profileScreen: undefined,
+  tabScreens: undefined,
 };
 
 const Navigation = () => {
@@ -81,7 +83,7 @@ const Navigation = () => {
           options={{headerShown: false}}
           component={ChatScreen}
         />
-        
+
         <Stack.Screen
           name="customeDialerScreen"
           options={{headerShown: false}}
@@ -91,6 +93,12 @@ const Navigation = () => {
         <Stack.Screen
           name="tabScreens"
           component={TabScreens}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="testingScreen"
+          component={Testing}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

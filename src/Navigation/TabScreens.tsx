@@ -71,8 +71,8 @@ const TabScreens = () => {
         }}
       />
       <Tab.Screen
-        name="chat"
-        component={HomeScreen}
+        name="chatScreen"
+        component={ChatScreen}
         options={{
           headerShown: false,
           tabBarLabel: 'Chats',

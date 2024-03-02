@@ -1,19 +1,15 @@
-import {View, Text, Circle} from 'tamagui';
+import {View, Text, Circle, Button} from 'tamagui';
 import {
+  BellRing,
   ChevronLeftCircle,
   ChevronRight,
-  ChevronRightCircle,
+  Globe,
+  HelpCircle,
   LogOut,
-  Pen,
-  PenSquare,
-  Pencil,
   PencilLine,
-  User,
+  Settings,
   User2,
-  UserCircle,
-  UserCircle2,
   UserSearch,
-  UserX2,
 } from '@tamagui/lucide-icons';
 import React from 'react';
 import styles from './styles';
@@ -64,9 +60,10 @@ const ProfileScreen: React.FC = () => {
       </View>
 
       <View style={styles.allServicesContainer}>
+        {/* account setting */}
         <View style={styles.profileItemsContainer}>
           <View style={styles.profileItemIcon}>
-            <UserSearch size={'$2'} color={'$gray10'} />
+            <UserSearch size={'$1.5'} color={'$gray10'} />
           </View>
           <View style={styles.profileItemTitle}>
             <Text fontSize={'$5'} color={'$gray11'}>
@@ -77,66 +74,71 @@ const ProfileScreen: React.FC = () => {
             <ChevronRight size={'$1'} color={'$purple9'} />
           </View>
         </View>
+        {/* change password */}
         <View style={styles.profileItemsContainer}>
           <View style={styles.profileItemIcon}>
-            <UserSearch size={'$2'} color={'$gray10'} />
+            <Settings size={'$1.5'} color={'$gray10'} />
           </View>
           <View style={styles.profileItemTitle}>
             <Text fontSize={'$5'} color={'$gray11'}>
-              Account Details
+              Change Password
             </Text>
           </View>
           <View style={styles.cheveronIconContainer}>
             <ChevronRight size={'$1'} color={'$purple9'} />
           </View>
         </View>
+        {/* notification */}
         <View style={styles.profileItemsContainer}>
           <View style={styles.profileItemIcon}>
-            <UserSearch size={'$2'} color={'$gray10'} />
+            <BellRing size={'$1.5'} color={'$gray10'} />
           </View>
           <View style={styles.profileItemTitle}>
             <Text fontSize={'$5'} color={'$gray11'}>
-              Account Details
+              Notifications
             </Text>
           </View>
           <View style={styles.cheveronIconContainer}>
             <ChevronRight size={'$1'} color={'$purple9'} />
           </View>
         </View>
+        {/* language */}
         <View style={styles.profileItemsContainer}>
           <View style={styles.profileItemIcon}>
-            <UserSearch size={'$2'} color={'$gray10'} />
+            <Globe size={'$1.5'} color={'$gray10'} />
           </View>
           <View style={styles.profileItemTitle}>
             <Text fontSize={'$5'} color={'$gray11'}>
-              Account Details
+              Language
             </Text>
           </View>
           <View style={styles.cheveronIconContainer}>
             <ChevronRight size={'$1'} color={'$purple9'} />
           </View>
         </View>
+        {/* help */}
         <View style={styles.profileItemsContainer}>
           <View style={styles.profileItemIcon}>
-            <UserSearch size={'$2'} color={'$gray10'} />
+            <HelpCircle size={'$1.5'} color={'$gray10'} />
           </View>
           <View style={styles.profileItemTitle}>
             <Text fontSize={'$5'} color={'$gray11'}>
-              Account Details
+              Help Center
             </Text>
           </View>
           <View style={styles.cheveronIconContainer}>
             <ChevronRight size={'$1'} color={'$purple9'} />
           </View>
         </View>
-        <Circle
-          size={'$6'}
-          backgroundColor={"red"}
-          alignSelf='flex-end'
-          margin={10}
-          marginBottom={responsiveScreenWidth(6)}>
-          <LogOut size={'$2.5'} color={"white"} />
-        </Circle>
+        <Button
+          onPress={() => navigation.navigate('loginScreen')}
+          backgroundColor={'$white5'}
+          style={styles.logoutButton}>
+          <Text fontSize={'$6'} color={'red'}>
+            Log Out
+          </Text>
+          <LogOut size={'$1'} color={'red'} marginLeft="$2" />
+        </Button>
       </View>
     </View>
   );

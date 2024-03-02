@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "494688737824",
+    "project_id": "voxscribe-031001",
+    "storage_bucket": "voxscribe-031001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494688737824:android:e402eff670244d8ed5fa45",
+        "android_client_info": {
+          "package_name": "com.voxscribe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494688737824-rtkg5lqq8c3qtfigf1g74nfh4ncsrlag.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.voxscribe",
+            "certificate_hash": "f4f6938d06ed47d78880f6df2c530da4a5864823"
+          }
+        },
+        {
+          "client_id": "494688737824-f5k9i6mfcid7l67vjd1spe9rbptrfkue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA55Sh2UJABrW6besyP7EWhAeUonOxaiYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494688737824-f5k9i6mfcid7l67vjd1spe9rbptrfkue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,3 +1,5 @@
+import {loginWithFacebool} from '../Social Login/loginWithFacebook';
+
 interface Data {
   phone: string;
   password: string;
@@ -9,4 +11,9 @@ export const loginAccount = (data: Data): boolean => {
   } else {
     return false;
   }
+};
+
+export const handleFacebookLogin = async () => {
+  let data = await loginWithFacebool();
+  // console.log(data);
 };

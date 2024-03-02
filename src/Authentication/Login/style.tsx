@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
   },
   registerBtn: {
     margin: responsiveWidth(3),
-    borderBottomLeftRadius: responsiveWidth(4),
-    borderTopRightRadius: responsiveWidth(4),
+    // borderBottomLeftRadius: responsiveWidth(4),
+    // borderTopRightRadius: responsiveWidth(4),
   },
   registerBtnTxt: {
     fontSize: responsiveFontSize(2),
@@ -26,43 +26,41 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   bottomContainer: {
-    flex: 2,
-    borderTopRightRadius: responsiveWidth(8),
-    borderTopLeftRadius: responsiveWidth(8),
-    elevation: 5,
+    flex: 3,
+    // borderTopRightRadius: responsiveWidth(8),
+    // borderTopLeftRadius: responsiveWidth(8),
+    // elevation: 5,
   },
   logoContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   logoTxt: {
-    fontSize: responsiveFontSize(4.5),
-    fontWeight: 'bold',
+    fontSize: responsiveFontSize(4.2),
+    // fontWeight: 'bold',
   },
   inputField: {
-    borderRadius: responsiveWidth(3),
-    backgroundColor: '#F3F3F3',
-    borderColor: '#8E4EC6',
-    borderWidth: 1,
+    width: responsiveWidth(90),
+    height: responsiveHeight(7),
+    marginVertical:responsiveWidth(4)
   },
   btnStyle: {
-    width: responsiveWidth(94),
+    width: responsiveWidth(90),
     height: responsiveHeight(6.5),
-    borderRadius: responsiveWidth(10),
+    borderRadius: responsiveWidth(2),
     backgroundColor: '#8E4EC6',
-    elevation: 5,
+    // elevation: 5,
   },
   btnTxt: {
-    fontSize: responsiveFontSize(2.8),
-    fontWeight: 'bold',
+    fontSize: responsiveFontSize(2.4),
+    // fontWeight: 'bold',
     color: 'white',
   },
   socialIconContainer: {
     flex: 2,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     // backgroundColor:"red"
   },
   icon: {

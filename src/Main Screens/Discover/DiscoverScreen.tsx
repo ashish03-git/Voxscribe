@@ -1,16 +1,42 @@
 import {View, Text, Button, Input, Circle} from 'tamagui';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './styles';
 import {ChevronLeftCircle, PlusCircle, Search} from '@tamagui/lucide-icons';
 import {FlatList, TextInput} from 'react-native';
 import ContactItem from './ContactItem';
 import {useNavigation} from '@react-navigation/native';
+import useContact from './useContact';
+import LottieView from 'lottie-react-native';
+import {
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+
+interface Contact {
+  givenName: string;
+  phoneNumbers: {id: string; label: string; number: string}[];
+  // Define other properties of a contact if needed
+}
 
 const DiscoverScreen: React.FC = () => {
-  const Data = new Array(10);
+  const [loader, setLoader] = useState(true);
+
+  const Data: Contact[] = useContact();
+  let newData = Data.sort((a, b) => {
+    if (a.givenName < b.givenName) return -1;
+    if (a.givenName > b.givenName) return 1;
+    return 0;
+  });
+
+  setTimeout(() => {
+    setLoader(false);
+  }, 500);
+
+  // console.log("single contact>>>>>>>>",Data[0].phoneNumbers[3].number);
   const navigation = useNavigation();
+
   return (
-    <View animation={'lazy'} style={styles.constainer}>
+    <View animation={'lazy'} style={styles.container}>
       {/* header container */}
       <View style={styles.headerContainer}>
         <ChevronLeftCircle
@@ -35,13 +61,24 @@ const DiscoverScreen: React.FC = () => {
       </View>
 
       {/* list of contacts  */}
-      <View style={styles.availableContactsContainer}>
-        <FlatList
-          data={Data}
-          showsVerticalScrollIndicator={false}
-          renderItem={({item}) => <ContactItem />}
-        />
-      </View>
+      {loader ? (
+        <View flex={7} justifyContent="center" alignItems="center">
+          <LottieView
+            source={require('../../../asset/Animation - 1709276064811.json')}
+            style={{width: responsiveWidth(30), height: responsiveHeight(10)}}
+            loop
+            autoPlay
+          />
+        </View>
+      ) : (
+        <View style={styles.availableContactsContainer}>
+          <FlatList
+            data={newData}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item}) => <ContactItem item={item} />}
+          />
+        </View>
+      )}
 
       {/* button container */}
       <View style={styles.continueBtnContainer}>
