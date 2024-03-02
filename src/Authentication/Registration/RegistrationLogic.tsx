@@ -10,8 +10,6 @@ import {err} from 'react-native-svg';
 const db = firebase.firestore();
 
 export const registerUser = async (values: MyFormRegistration) => {
-
-
   try {
     const signUpStatus = await auth().createUserWithEmailAndPassword(
       values.email,
@@ -19,6 +17,7 @@ export const registerUser = async (values: MyFormRegistration) => {
     );
     if (signUpStatus) {
       await createUserInFirestore(signUpStatus.user.uid, values);
+      return true;
     }
   } catch (error: any) {
     const seprateError: string = error;
@@ -42,8 +41,10 @@ export const registerUser = async (values: MyFormRegistration) => {
           onPress: () => {},
         },
       ]);
+      return false;
     } else {
       console.log('No match found.');
+      return false;
     }
   }
 };

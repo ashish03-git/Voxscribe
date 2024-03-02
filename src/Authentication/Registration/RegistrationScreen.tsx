@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Button, Input} from 'tamagui';
 import {Facebook, Github, Phone, Twitter} from '@tamagui/lucide-icons';
-import {SafeAreaView, TextInput} from 'react-native';
+import {ActivityIndicator, SafeAreaView, TextInput} from 'react-native';
 import {Icon} from '@rneui/themed';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -29,10 +29,8 @@ export interface MyFormRegistration extends MyFormValues {
 
 const RegistrationScreen: React.FC = () => {
   const navigation = useNavigation<RegisterScreenProps>();
-  let [name, setName] = useState('');
-  let [email, setEmail] = useState('');
-  let [number, setNumber] = useState('');
-  let [password, setPassword] = useState('');
+  const [loader, setLoader] = useState<boolean>(false);
+  const [registrationStatus, setRegistrationStatus] = useState<boolean>();
   const initialValues: MyFormRegistration = {
     name: '',
     email: '',
@@ -45,13 +43,19 @@ const RegistrationScreen: React.FC = () => {
     values: MyFormRegistration,
     setSubmitting: (isSubmitting: boolean) => void,
   ) => {
-    setTimeout( async() => {
+    setLoader(true);
+    setTimeout(async () => {
       // console.log('entered values>>>>', values);
       // calling register function to register user into firebase
-      await registerUser(values);
-      // JSON.stringify(values, null, 2);
-      // setSubmitting(false);
-      // Call any other logic you want here
+      let response = await registerUser(values);
+      if (response) {
+        setLoader(false);
+        setRegistrationStatus(true);
+      } else {
+        setLoader(false);
+        setRegistrationStatus(false);
+      }
+      setSubmitting(false);
     }, 500);
   };
 
@@ -141,11 +145,20 @@ const RegistrationScreen: React.FC = () => {
                   <Text style={styles.errorText}>{errors.password}</Text>
                 )}
 
+                {registrationStatus ? (
+                  <Text style={styles.success}>user registered successfully</Text>
+                ) : (registrationStatus==false)?(
+                  <Text style={styles.failure}>user registration is failed</Text>
+                ):null}
                 <Button
                   disabled={!isValid}
                   onPress={() => handleSubmit()}
                   style={isValid ? styles.btnStyle : styles.disableButton}>
-                  <Text style={styles.btnTxt}>Register</Text>
+                  {loader ? (
+                    <ActivityIndicator size={'large'} color={'white'} />
+                  ) : (
+                    <Text style={styles.btnTxt}>Register</Text>
+                  )}
                 </Button>
 
                 <Text fontSize="$5" margin="$3">

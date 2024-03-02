@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     // elevation: 5,
   },
   logoContainer: {
-    flex:1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal:responsiveWidth(1)
+    paddingHorizontal: responsiveWidth(1),
   },
   inputField: {
     width: responsiveWidth(90),
@@ -88,12 +88,20 @@ const styles = StyleSheet.create({
     height: responsiveWidth(18),
     borderRadius: responsiveWidth(15),
   },
-  errorText:{
+  errorText: {
     fontSize: responsiveFontSize(1.8),
     // marginBottom:responsiveHeight(2),
     color: 'red',
     marginLeft: responsiveHeight(3),
     alignSelf: 'flex-start',
+  },
+  success: {
+    fontSize: responsiveFontSize(1.8),
+    color: 'green',
+  },
+  failure:{
+    fontSize: responsiveFontSize(1.8),
+    color: 'red',
   }
 });
 

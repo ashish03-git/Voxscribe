@@ -40,6 +40,12 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(4.2),
     // fontWeight: 'bold',
   },
+  formikConatiner:{
+    flex: 2,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    // backgroundColor:"red"
+  },
   inputField: {
     width: responsiveWidth(90),
     height: responsiveHeight(6.5),

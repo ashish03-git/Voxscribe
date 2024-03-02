@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, Button, InputFrame} from 'tamagui';
 import {Facebook, Github, Phone, Twitter} from '@tamagui/lucide-icons';
-import {SafeAreaView, TextInput} from 'react-native';
+import {ActivityIndicator, SafeAreaView, TextInput} from 'react-native';
 import {Input, Dialog} from '@rneui/themed';
 import {Icon} from '@rneui/themed';
 import styles from './style';
@@ -27,8 +27,7 @@ export interface MyFormValues {
 
 const LoginScreen: React.FC = () => {
   const navigation = useNavigation<LoginScreenProps>();
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [loader, setLoader] = useState<boolean>(false);
   const [showAlert, setShowAlert] = useState(true);
   const [loginFailed, setLoginFailed] = useState<boolean>(false);
   const initialValues: MyFormValues = {email: '', password: ''};
@@ -36,24 +35,24 @@ const LoginScreen: React.FC = () => {
     setLoginFailed(newValue);
   };
 
-  const handleLogin = async () => {
-    const data = {
-      email,
-      password,
-    };
-    try {
-      let response = await userAccountLogin(data);
-      console.log('final response', response);
-
-      if (response) {
-        navigation.navigate('tabScreens');
-      } else {
-        setLoginFailed(true);
-      }
-    } catch (error) {
-      console.log('Error during login:', error);
-      setLoginFailed(true);
+  const handleLogin = async (
+    values: MyFormValues,
+    setSubmitting: (isSubmitting: boolean) => void,
+  ) => {
+    setLoader(true)
+    // console.log('entered values>>>>', values);
+    // calling login function 
+    let response = await userAccountLogin(values);
+    if (response) {
+      setLoader(false);
+      navigation.navigate('tabScreens');
+    } else {
+      setLoader(false);
+      setShowAlert(true);
     }
+    // JSON.stringify(values, null, 2);
+    setSubmitting(false);
+    // Call any other logic you want here
   };
 
   return (
@@ -88,11 +87,7 @@ const LoginScreen: React.FC = () => {
               onSubmit={(
                 values: MyFormValues,
                 {setSubmitting}: FormikHelpers<MyFormValues>,
-              ) => {
-                setTimeout(async () => {
-                  await userAccountLogin(values);
-                }, 500);
-              }}>
+              ) => handleLogin(values, setSubmitting)}>
               {({
                 handleChange,
                 handleBlur,
@@ -101,13 +96,7 @@ const LoginScreen: React.FC = () => {
                 errors,
                 isValid,
               }) => (
-                <View
-                  style={{
-                    flex: 2,
-                    justifyContent: 'space-evenly',
-                    alignItems: 'center',
-                    // backgroundColor:"red"
-                  }}>
+                <View style={styles.formikConatiner}>
                   <TextInput
                     placeholder="Email Address"
                     style={styles.inputField}
@@ -119,6 +108,7 @@ const LoginScreen: React.FC = () => {
                   {errors.email && (
                     <Text style={styles.errorText}>{errors.email}</Text>
                   )}
+
                   <TextInput
                     style={styles.inputField}
                     value={values.password}
@@ -134,7 +124,11 @@ const LoginScreen: React.FC = () => {
                     disabled={!isValid}
                     onPress={() => handleSubmit()}
                     style={isValid ? styles.btnStyle : styles.disableButton}>
-                    <Text style={styles.btnTxt}>Login</Text>
+                    {loader ? (
+                      <ActivityIndicator size={'large'} color={'white'} />
+                    ) : (
+                      <Text style={styles.btnTxt}>Login</Text>
+                    )}
                   </Button>
 
                   <Text fontSize="$5" margin="$2">
@@ -160,7 +154,7 @@ const LoginScreen: React.FC = () => {
                 />
               </Button>
               <Button
-                onPress={handleLogin}
+                onPress={handleFacebookLogin}
                 backgroundColor={'$white2'}
                 style={styles.icon}>
                 <Facebook size={'$3.5'} color={'$purple9'} />

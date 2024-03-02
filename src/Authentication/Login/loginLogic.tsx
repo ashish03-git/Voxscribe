@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import {loginWithFacebool} from '../Social Login/loginWithFacebook';
 import auth from '@react-native-firebase/auth';
 
@@ -5,6 +6,7 @@ interface Payload {
   email: string;
   password: string;
 }
+
 // Login logic
 export const userAccountLogin = async (data: Payload) => {
   try {
@@ -12,9 +14,9 @@ export const userAccountLogin = async (data: Payload) => {
       data.email,
       data.password,
     );
-
     if (response.user.uid) {
-      console.log('navigate user to home screen>>>>>>>>');
+      // console.log('navigate user to home screen>>>>>>>>');
+      return true;
     } else {
       return false;
     }
