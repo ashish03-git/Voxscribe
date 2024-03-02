@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     height: responsiveHeight(102),
   },
   topContainer: {
-    flex: 1,
+    // flex: 1,
     alignItems: 'flex-end',
     // backgroundColor:"#FFF7ED"
   },
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   bottomContainer: {
-    flex: 8,
+    flex: 6,
     borderTopRightRadius: responsiveWidth(8),
     borderTopLeftRadius: responsiveWidth(8),
     // elevation: 5,
@@ -50,9 +50,11 @@ const styles = StyleSheet.create({
   inputField: {
     width: responsiveWidth(90),
     height: responsiveHeight(6.5),
-    marginVertical: responsiveHeight(2),
     borderRadius: responsiveWidth(2),
-    borderWidth: 1,
+    fontSize: responsiveFontSize(2),
+    backgroundColor: '#F1F4F3',
+    paddingHorizontal: responsiveWidth(4),
+    // marginVertical: responsiveWidth(3),
   },
   btnStyle: {
     width: responsiveWidth(90),
@@ -62,13 +64,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#8E4EC6',
     // elevation: 5,
   },
+  disableButton: {
+    width: responsiveWidth(90),
+    height: responsiveHeight(6.5),
+    borderRadius: responsiveWidth(2),
+    backgroundColor: '#D3B4ED',
+    marginTop: responsiveWidth(3),
+  },
   btnTxt: {
     fontSize: responsiveFontSize(2.4),
     // fontWeight: 'bold',
     color: 'white',
   },
   socialIconContainer: {
-    flex: 2,
+    flex: 1.5,
     flexDirection: 'row',
     justifyContent: 'space-around',
     // alignItems: 'center',
@@ -79,6 +88,13 @@ const styles = StyleSheet.create({
     height: responsiveWidth(18),
     borderRadius: responsiveWidth(15),
   },
+  errorText:{
+    fontSize: responsiveFontSize(1.8),
+    // marginBottom:responsiveHeight(2),
+    color: 'red',
+    marginLeft: responsiveHeight(3),
+    alignSelf: 'flex-start',
+  }
 });
 
 export default styles;

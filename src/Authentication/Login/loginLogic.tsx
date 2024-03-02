@@ -1,14 +1,25 @@
 import {loginWithFacebool} from '../Social Login/loginWithFacebook';
+import auth from '@react-native-firebase/auth';
 
-interface Data {
-  phone: string;
+interface Payload {
+  email: string;
   password: string;
 }
 // Login logic
-export const loginAccount = (data: Data): boolean => {
-  if (data.phone === '1234567890' && data.password === '123456') {
-    return true;
-  } else {
+export const userAccountLogin = async (data: Payload) => {
+  try {
+    let response = await auth().signInWithEmailAndPassword(
+      data.email,
+      data.password,
+    );
+
+    if (response.user.uid) {
+      console.log('navigate user to home screen>>>>>>>>');
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log('login failed >>>>>', error);
     return false;
   }
 };
