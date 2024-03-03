@@ -39,6 +39,7 @@ const LoginScreen: React.FC = () => {
     values: MyFormValues,
     setSubmitting: (isSubmitting: boolean) => void,
   ) => {
+    navigation.navigate('tabScreens');
     setLoader(true)
     // console.log('entered values>>>>', values);
     // calling login function 

@@ -1,7 +1,10 @@
 import {View, Text, Button, Circle, Checkbox} from 'tamagui';
 import React from 'react';
 import styles from './styles';
-import {User2, Dot} from '@tamagui/lucide-icons';
+import {User2, Dot, ChevronRight} from '@tamagui/lucide-icons';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackNavigationList } from '../../Navigation/Navigation';
 
 interface ListItemProp {
   item: {
@@ -10,10 +13,12 @@ interface ListItemProp {
   };
 }
 
+type NavigationProps = StackNavigationProp<typeof RootStackNavigationList>
+
 const ContactItem: React.FC<ListItemProp> = ({item}) => {
   // console.log((item));
-  let singleContactNumber = item.number?.[0]
-
+  let singleContactNumber = item.number?.[0];
+  const navigation = useNavigation<NavigationProps>()
 
   return (
     <View style={styles.contactListContainer}>
@@ -29,7 +34,7 @@ const ContactItem: React.FC<ListItemProp> = ({item}) => {
         </Text>
       </View>
       <View style={styles.selectContactContainer}>
-        <Checkbox
+        {/* <Checkbox
           size={'$2.5'}
           circular
           backgroundColor={'white'}
@@ -37,7 +42,8 @@ const ContactItem: React.FC<ListItemProp> = ({item}) => {
           <Checkbox.Indicator>
             <Dot size={'$6'} color={'$purple9'} />
           </Checkbox.Indicator>
-        </Checkbox>
+        </Checkbox> */}
+        <ChevronRight size={'$3'} color={'$gray10'} onPress={()=>navigation.navigate("contactDetailsScreen")} />
       </View>
     </View>
   );

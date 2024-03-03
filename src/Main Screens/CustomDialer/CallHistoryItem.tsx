@@ -3,8 +3,14 @@ import {Circle} from 'tamagui';
 import {User2, ChevronRight} from '@tamagui/lucide-icons';
 import React from 'react';
 import styles from './styles';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackNavigationList} from '../../Navigation/Navigation';
+
+type NavigationProps = StackNavigationProp<typeof RootStackNavigationList>;
 
 const CallHistoryItem = () => {
+  const navigation = useNavigation<NavigationProps>();
   return (
     <View style={styles.contactListContainer}>
       <View style={styles.contactProfileContainer}>
@@ -27,7 +33,11 @@ const CallHistoryItem = () => {
         </Text>
       </View>
       <View style={styles.selectContactContainer}>
-        <ChevronRight color={'$gray10'} size={'$1'} />
+        <ChevronRight
+          color={'$gray10'}
+          size={'$1'}
+          onPress={() => navigation.navigate('contactDetailsScreen')}
+        />
       </View>
     </View>
   );

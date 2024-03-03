@@ -37,7 +37,7 @@ const DialerScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const callHistory = new Array(10);
   const navigation = useNavigation<StackScreenNavigationList>();
-  const [openDialer, setOpenDialer] = useState(false);
+  const [openDialer, setOpenDialer] = useState(true);
   const [userStartedEnteringNumber, setUserStartedEnteringNumber] =
     useState(false);
 
