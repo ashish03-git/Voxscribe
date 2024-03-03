@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: responsiveScreenWidth(3),
+    paddingHorizontal: responsiveScreenWidth(6),
   },
   callHistoryText: {
     fontSize: responsiveScreenFontSize(2.2),
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   historyItemContainer: {
     flexDirection: 'row',
-    width: responsiveScreenWidth(92),
+    width: responsiveScreenWidth(88),
     // backgroundColor:"red",
     height: responsiveScreenHeight(6),
     marginVertical: responsiveScreenWidth(2),

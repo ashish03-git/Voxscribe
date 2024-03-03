@@ -18,9 +18,13 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {FlatList} from 'react-native';
 import CallHistoryList from './CallHistoryList';
+import { RootStackNavigationList } from '../../Navigation/Navigation';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+type NavigationProps = StackNavigationProp<typeof RootStackNavigationList>
 
 const ContactDetails: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
   const incomingRecords = new Array(5);
   return (
     <View style={styles.container}>
@@ -59,7 +63,7 @@ const ContactDetails: React.FC = () => {
           circular
           size={'$6'}
           backgroundColor={'$purple9'}
-          onPress={() => console.log('video call this user')}>
+          onPress={() => navigation.navigate("videoCallScreen")}>
           <Video size={'$3'} color={'$white1'} />
         </Button>
         <Button
