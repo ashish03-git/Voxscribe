@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal:responsiveScreenWidth(3)
+    paddingHorizontal: responsiveScreenWidth(3),
   },
   searchInput: {
     width: responsiveWidth(78),
@@ -70,6 +70,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // alignItems: 'center',
     // backgroundColor: 'red',
+  },
+  // chat ui
+  chatui_container: {
+    width: responsiveScreenWidth(100),
+    height: responsiveScreenHeight(90),
+  },
+  chatui_name: {
+    fontSize: responsiveScreenFontSize(2.4),
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  chatui_headerContainer: {
+    width: responsiveScreenWidth(100),
+    height: responsiveScreenHeight(8),
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: Colors.purple,
+  },
+  chatui_headerUserDetails: {
+    flex: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

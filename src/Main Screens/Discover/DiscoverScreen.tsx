@@ -1,8 +1,15 @@
 import {View, Text, Button, Input, Circle} from 'tamagui';
 import React, {useEffect, useState} from 'react';
 import styles from './styles';
-import {ChevronLeftCircle, PlusCircle, Search} from '@tamagui/lucide-icons';
-import {FlatList, TextInput} from 'react-native';
+import {
+  ChevronLeftCircle,
+  Phone,
+  PhoneCall,
+  PhoneForwarded,
+  PlusCircle,
+  Search,
+} from '@tamagui/lucide-icons';
+import {FlatList, RefreshControl, TextInput} from 'react-native';
 import ContactItem from './ContactItem';
 import {useNavigation} from '@react-navigation/native';
 import useContact from './useContact';
@@ -11,15 +18,20 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import {RootStackNavigationList} from '../../Navigation/Navigation';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 interface Contact {
   givenName: string;
-  phoneNumbers: {id: string; label: string; number: string}[];
+  phoneNumbers?: [];
   // Define other properties of a contact if needed
 }
 
+type NavigationProps = StackNavigationProp<typeof RootStackNavigationList>;
+
 const DiscoverScreen: React.FC = () => {
   const [loader, setLoader] = useState(true);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const Data: Contact[] = useContact();
   let newData = Data.sort((a, b) => {
@@ -33,7 +45,15 @@ const DiscoverScreen: React.FC = () => {
   }, 500);
 
   // console.log("single contact>>>>>>>>",Data[0].phoneNumbers[3].number);
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    // useContact();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 3000);
+  };
 
   return (
     <View animation={'lazy'} style={styles.container}>
@@ -44,7 +64,12 @@ const DiscoverScreen: React.FC = () => {
           color={'$gray10'}
           onPress={() => navigation.goBack()}
         />
-        {/* <PlusCircle size={'$5'} color={'$purple9'} /> */}
+        <Circle
+          onPress={() => navigation.navigate('customeDialerScreen')}
+          size={'$4'}
+          backgroundColor={'$white5'}>
+          <Phone size={'$1'} color={'$purple9'} />
+        </Circle>
       </View>
 
       {/* search input field */}
@@ -71,13 +96,28 @@ const DiscoverScreen: React.FC = () => {
           />
         </View>
       ) : (
-        <View style={styles.availableContactsContainer}>
-          <FlatList
-            data={newData}
-            showsVerticalScrollIndicator={false}
-            renderItem={({item}) => <ContactItem item={item} />}
-          />
-        </View>
+        <>
+          {newData.length>0 ? (
+            <View style={styles.availableContactsContainer}>
+              <FlatList
+                data={newData}
+                showsVerticalScrollIndicator={false}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }
+                renderItem={({item}) => <ContactItem item={item} />}
+              />
+            </View>
+          ) : (
+            <View flex={7} justifyContent='center' alignItems='center'>
+              <Text>contacts not available</Text>
+              <Text>permission required to access contact</Text>
+            </View>
+          )}
+        </>
       )}
 
       {/* button container */}

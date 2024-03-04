@@ -9,6 +9,7 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@flyerhq/react-native-chat-ui": "^1.4.3",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@notifee/react-native": "^7.8.2",
     "@react-native-clipboard/clipboard": "^1.13.2",

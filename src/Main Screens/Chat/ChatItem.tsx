@@ -2,10 +2,18 @@ import {View, Text, Circle} from 'tamagui';
 import React from 'react';
 import styles from './styles';
 import {User2} from '@tamagui/lucide-icons';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackNavigationList} from '../../Navigation/Navigation';
+
+type NavigationProps = StackNavigationProp<typeof RootStackNavigationList>;
 
 const ChatItem: React.FC = () => {
+  const navigation = useNavigation<NavigationProps>();
   return (
-    <View style={styles.contactListContainer}>
+    <View
+      onPress={() => navigation.navigate('chatUiScreen')}
+      style={styles.contactListContainer}>
       <View style={styles.contactProfileContainer}>
         <Circle size={'$6'} backgroundColor={'$white4'}>
           <User2 size={'$2.5'} color={'$purple9'} />

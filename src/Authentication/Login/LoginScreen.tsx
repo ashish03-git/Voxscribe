@@ -39,21 +39,19 @@ const LoginScreen: React.FC = () => {
     values: MyFormValues,
     setSubmitting: (isSubmitting: boolean) => void,
   ) => {
-    navigation.navigate('tabScreens');
-    setLoader(true)
+    setLoader(true);
     // console.log('entered values>>>>', values);
-    // calling login function 
+    navigation.navigate('tabScreens');
+    // calling login function
     let response = await userAccountLogin(values);
     if (response) {
       setLoader(false);
       navigation.navigate('tabScreens');
     } else {
       setLoader(false);
-      setShowAlert(true);
+      setLoginFailed(true);
     }
-    // JSON.stringify(values, null, 2);
     setSubmitting(false);
-    // Call any other logic you want here
   };
 
   return (
@@ -123,7 +121,8 @@ const LoginScreen: React.FC = () => {
                   )}
                   <Button
                     disabled={!isValid}
-                    onPress={() => handleSubmit()}
+                    // onPress={() => handleSubmit()}
+                    onPress={() => navigation.navigate('tabScreens')}
                     style={isValid ? styles.btnStyle : styles.disableButton}>
                     {loader ? (
                       <ActivityIndicator size={'large'} color={'white'} />

@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent:"space-between",
     alignItems: 'center',
     // backgroundColor: 'red',
     paddingHorizontal: responsiveWidth(4),
