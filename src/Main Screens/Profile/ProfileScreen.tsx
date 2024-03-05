@@ -11,20 +11,41 @@ import {
   User2,
   UserSearch,
 } from '@tamagui/lucide-icons';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackNavigationList} from '../../Navigation/Navigation';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {FlatList} from 'react-native';
-import {responsiveScreenWidth} from 'react-native-responsive-dimensions';
+import {useGetUserDetails} from '../../Hooks/Get Hooks/firebaseGetHooks';
+import {useSelector} from 'react-redux';
 
 type StackScreenNavigationList = StackNavigationProp<
   typeof RootStackNavigationList
 >;
 
+interface User {
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+}
+
 const ProfileScreen: React.FC = () => {
   const navigation = useNavigation<StackScreenNavigationList>();
+  const [details, setDetails] = useState<User>();
+  const uid: string = useSelector(state => state.redux_store.firebaseUserId);
+
+  useEffect(() => {
+    GetUserDetails();
+  }, []);
+
+  const GetUserDetails = async () => {
+    const data = await useGetUserDetails(uid);
+    if (data) {
+      setDetails(data);
+    }
+  };
+
   return (
     <View backgroundColor={'$white1'} style={styles.container}>
       {/* Header */}
@@ -53,9 +74,9 @@ const ProfileScreen: React.FC = () => {
       </View>
 
       <View style={styles.userNameContainer}>
-        <Text style={styles.nameTxt}>Ashish Yadav</Text>
+        <Text style={styles.nameTxt}>{details?.name}</Text>
         <Text fontSize={'$7'} color={'gray'}>
-          ashish@gmail.com
+          {details?.email}
         </Text>
       </View>
 

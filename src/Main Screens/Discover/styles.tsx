@@ -29,19 +29,19 @@ const styles = StyleSheet.create({
     // backgroundColor: 'yellow',
   },
   searchInput: {
-    width: responsiveWidth(78),
+    width: responsiveWidth(90),
     height: responsiveHeight(6),
     borderRadius: responsiveWidth(3),
     borderWidth: 1,
   },
   availableContactsContainer: {
-    flex: 7,
+    flex: 9,
     alignItems: 'center',
     // backgroundColor: 'pink',
   },
   contactListContainer: {
     flexDirection: 'row',
-    elevation: 1,
+    elevation: 0.6,
     width: responsiveWidth(96),
     height: responsiveHeight(10),
     marginVertical: responsiveWidth(2),

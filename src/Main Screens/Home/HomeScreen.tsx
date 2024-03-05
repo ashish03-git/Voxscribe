@@ -1,5 +1,5 @@
 import {View, Text, Circle, Card, Button} from 'tamagui';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styles from './styles';
 import {StatusBar} from 'react-native';
@@ -19,13 +19,43 @@ import Colors from '../../Extra/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackNavigationList} from '../../Navigation/Navigation';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useGetUserDetails} from '../../Hooks/Get Hooks/firebaseGetHooks';
+import {useDispatch, useSelector} from 'react-redux';
+import {add_firebaseUserDetails} from '../../Redux/ReduxSlice';
 
 type StackScreenNavigationList = StackNavigationProp<
   typeof RootStackNavigationList
 >;
 
+interface User {
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+}
+
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<StackScreenNavigationList>();
+  const [user, setUser] = useState<User>();
+  const dispatch = useDispatch();
+  const uid = useSelector(state => state.redux_store.firebaseUserId);
+
+  useEffect(() => {
+    GetUserDetails();
+  }, []);
+
+  const GetUserDetails = async () => {
+    let data = await useGetUserDetails(uid);
+    // console.log('home screen data>>>>', data);
+    if (data) {
+      dispatch(add_firebaseUserDetails(data));
+      setUser(data);
+    } else {
+      // Handle the case where data is undefined, for example:
+      console.error('User details not found.');
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
@@ -33,7 +63,7 @@ const HomeScreen: React.FC = () => {
         <View style={styles.personalDetailsContainer}>
           <View style={styles.nameContainer}>
             <Text style={styles.greetingTxt}>Hey!</Text>
-            <Text style={styles.nameTxt}>Ashish</Text>
+            <Text style={styles.nameTxt}>{user?.name.split(' ')[0]}</Text>
           </View>
           <View style={styles.profileContainer}>
             <View backgroundColor={'$white3'} style={styles.circleContainer}>

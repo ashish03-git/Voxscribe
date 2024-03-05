@@ -1,4 +1,4 @@
-import {View, Text, Button, Input, Circle} from 'tamagui';
+import {View, Text, Button, Input, Circle, TextArea} from 'tamagui';
 import React, {useEffect, useState} from 'react';
 import styles from './styles';
 import {
@@ -12,7 +12,7 @@ import {
 import {FlatList, RefreshControl, TextInput} from 'react-native';
 import ContactItem from './ContactItem';
 import {useNavigation} from '@react-navigation/native';
-import useContact from './useContact';
+import useContact from '../../Hooks/useContact';
 import LottieView from 'lottie-react-native';
 import {
   responsiveHeight,
@@ -20,6 +20,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import {RootStackNavigationList} from '../../Navigation/Navigation';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useSearch} from '../../Hooks/useSearch';
 
 interface Contact {
   givenName: string;
@@ -32,6 +33,9 @@ type NavigationProps = StackNavigationProp<typeof RootStackNavigationList>;
 const DiscoverScreen: React.FC = () => {
   const [loader, setLoader] = useState(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [searchText, setSearchText] = useState('');
+  const [searching, setSearcing] = useState<boolean>(false);
+  const [searchResultData, setSearchResultData] = useState([]);
 
   const Data: Contact[] = useContact();
   let newData = Data.sort((a, b) => {
@@ -42,7 +46,7 @@ const DiscoverScreen: React.FC = () => {
 
   setTimeout(() => {
     setLoader(false);
-  }, 500);
+  }, 2000);
 
   // console.log("single contact>>>>>>>>",Data[0].phoneNumbers[3].number);
   const navigation = useNavigation<NavigationProps>();
@@ -53,6 +57,13 @@ const DiscoverScreen: React.FC = () => {
     setTimeout(() => {
       setRefreshing(false);
     }, 3000);
+  };
+
+  const handleSearch = (text: string) => {
+    setSearchText(text);
+    setSearcing(true); 
+    let searchResult = useSearch(newData, text); 
+    setSearchResultData(searchResult);
   };
 
   return (
@@ -77,17 +88,22 @@ const DiscoverScreen: React.FC = () => {
         <Input
           fontSize="$6"
           placeholder="search here ..."
+          onChangeText={(text: string) => handleSearch(text)}
+          value={searchText}
           style={styles.searchInput}
           borderRadius="$10"
         />
-        <Circle size={'$4.5'} backgroundColor={'$white5'}>
+        {/* <Circle
+          // onPress={()=>handleSearch}
+          size={'$4.5'}
+          backgroundColor={'$white5'}>
           <Search size={'$1'} color={'$purple9'} />
-        </Circle>
+        </Circle> */}
       </View>
 
       {/* list of contacts  */}
       {loader ? (
-        <View flex={7} justifyContent="center" alignItems="center">
+        <View flex={9} justifyContent="center" alignItems="center">
           <LottieView
             source={require('../../../asset/Animation - 1709276064811.json')}
             style={{width: responsiveWidth(30), height: responsiveHeight(10)}}
@@ -96,36 +112,24 @@ const DiscoverScreen: React.FC = () => {
           />
         </View>
       ) : (
-        <>
-          {newData.length>0 ? (
-            <View style={styles.availableContactsContainer}>
-              <FlatList
-                data={newData}
-                showsVerticalScrollIndicator={false}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }
-                renderItem={({item}) => <ContactItem item={item} />}
-              />
-            </View>
-          ) : (
-            <View flex={7} justifyContent='center' alignItems='center'>
-              <Text>contacts not available</Text>
-              <Text>permission required to access contact</Text>
-            </View>
-          )}
-        </>
+        <View style={styles.availableContactsContainer}>
+          <FlatList
+            data={searching ? searchResultData : newData}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            renderItem={({item}) => <ContactItem item={item} />}
+          />
+        </View>
       )}
 
       {/* button container */}
-      <View style={styles.continueBtnContainer}>
+      {/* <View style={styles.continueBtnContainer}>
         <Button style={styles.continueBtn}>
           <Text style={styles.continueBtnTxt}>Continue</Text>
         </Button>
-      </View>
+      </View> */}
     </View>
   );
 };

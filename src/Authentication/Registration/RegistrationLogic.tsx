@@ -1,11 +1,8 @@
 import {MyFormRegistration} from './RegistrationScreen';
-import Firebase from '@react-native-firebase/app';
 import auth from '@react-native-firebase/auth';
 import {firebase} from '@react-native-firebase/firestore';
-import firestore from '@react-native-firebase/firestore';
-import {FileJson2} from '@tamagui/lucide-icons';
 import {Alert} from 'react-native';
-import {err} from 'react-native-svg';
+
 
 const db = firebase.firestore();
 

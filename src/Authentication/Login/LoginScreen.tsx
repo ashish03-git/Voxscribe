@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Button, InputFrame} from 'tamagui';
 import {Facebook, Github, Phone, Twitter} from '@tamagui/lucide-icons';
 import {ActivityIndicator, SafeAreaView, TextInput} from 'react-native';
@@ -18,6 +18,10 @@ import Alert from '../../Extra/Alert';
 import {loginWithFacebool} from '../Social Login/loginWithFacebook';
 import {Formik, Field, Form, FormikHelpers} from 'formik';
 import {LoginValidationSchema} from '../ValidationSchema';
+import {useGetUserDetails} from '../../Hooks/Get Hooks/firebaseGetHooks';
+import {usePostContact} from '../../Hooks/Post Hooks/firebasePostHooks';
+import {useDispatch} from 'react-redux';
+import {add_firebaseUserId} from '../../Redux/ReduxSlice';
 
 type LoginScreenProps = StackNavigationProp<typeof RootStackNavigationList>;
 export interface MyFormValues {
@@ -31,6 +35,7 @@ const LoginScreen: React.FC = () => {
   const [showAlert, setShowAlert] = useState(true);
   const [loginFailed, setLoginFailed] = useState<boolean>(false);
   const initialValues: MyFormValues = {email: '', password: ''};
+  const dispatch = useDispatch();
   const updateParentState = (newValue: boolean) => {
     setLoginFailed(newValue);
   };
@@ -41,11 +46,13 @@ const LoginScreen: React.FC = () => {
   ) => {
     setLoader(true);
     // console.log('entered values>>>>', values);
-    navigation.navigate('tabScreens');
+    // navigation.navigate('tabScreens');
     // calling login function
-    let response = await userAccountLogin(values);
-    if (response) {
+    let userId: string = await userAccountLogin(values);
+
+    if (userId) {
       setLoader(false);
+      dispatch(add_firebaseUserId(userId));
       navigation.navigate('tabScreens');
     } else {
       setLoader(false);
@@ -53,6 +60,8 @@ const LoginScreen: React.FC = () => {
     }
     setSubmitting(false);
   };
+
+  // usePostContact()
 
   return (
     <SafeAreaView style={styles.container}>
@@ -121,8 +130,7 @@ const LoginScreen: React.FC = () => {
                   )}
                   <Button
                     disabled={!isValid}
-                    // onPress={() => handleSubmit()}
-                    onPress={() => navigation.navigate('tabScreens')}
+                    onPress={() => handleSubmit()}
                     style={isValid ? styles.btnStyle : styles.disableButton}>
                     {loader ? (
                       <ActivityIndicator size={'large'} color={'white'} />

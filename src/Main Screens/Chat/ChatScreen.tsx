@@ -52,9 +52,9 @@ const ChatScreen: React.FC = () => {
           style={styles.searchInput}
           borderRadius="$10"
         />
-        <Circle size={'$4.5'} backgroundColor={'$white5'}>
+        {/* <Circle size={'$4.5'} backgroundColor={'$white5'}>
           <Search size={'$1'} color={'$purple9'} />
-        </Circle>
+        </Circle> */}
       </View>
 
       {/* body container  */}

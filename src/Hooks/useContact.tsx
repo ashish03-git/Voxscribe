@@ -22,7 +22,7 @@ const useContact = () => {
       await request(PERMISSIONS.ANDROID.READ_CONTACTS).then(result => {
         //   console.log(result);
         if (result === 'granted') {
-          Contacts.getAll().then(record => {
+          Contacts.getAll().then((record) => {
             if (record.length > 0) {
               setContacts(record);
             } else {

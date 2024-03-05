@@ -1,4 +1,3 @@
-
 // App.tsx file
 
 import {View, Text} from 'tamagui';
@@ -8,6 +7,8 @@ import appConfig from './tamagui.config';
 import Navigation from './src/Navigation/Navigation';
 import {StatusBar} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Provider} from 'react-redux';
+import store from './src/Redux/ReduxStore';
 // import {
 //   StreamVideo,
 //   StreamVideoClient,
@@ -37,13 +38,14 @@ const App = () => {
     <TamaguiProvider config={appConfig}>
       <SafeAreaProvider>
         <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
-        <Navigation />
+        <Provider store={store}>
+          <Navigation />
+        </Provider>
       </SafeAreaProvider>
     </TamaguiProvider>
   );
 };
 export default App;
-
 
 // steam call setupt
 /*
@@ -312,4 +314,3 @@ const getPermission = async () => {
 
 export default App;
 */
-

@@ -6,11 +6,34 @@ import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackNavigationList} from '../../Navigation/Navigation';
+import {UseDispatch, useDispatch} from 'react-redux';
+import {
+  add_contact_full_Details,
+  add_selected_number_to_call,
+} from '../../Redux/ReduxSlice';
 
 type NavigationProps = StackNavigationProp<typeof RootStackNavigationList>;
 
 const CallHistoryItem = () => {
   const navigation = useNavigation<NavigationProps>();
+  const details = {
+    name: 'Ashish Yadav',
+    phone: '+91 9730592488',
+    img: '',
+    hasThumbnail: false,
+  };
+  const dispatch = useDispatch();
+
+  // dispatching data to redux store to show full details of contact
+  const handleShowFullDetails = () => {
+    dispatch(add_contact_full_Details(details));
+    navigation.navigate('contactDetailsScreen');
+  };
+
+  // sending phone number to redux which we want to call
+  const handleSelectedNumberToCall = () => {
+    dispatch(add_selected_number_to_call({phone: '+919730592488'}));
+  };
   return (
     <View style={styles.contactListContainer}>
       <View style={styles.contactProfileContainer}>
@@ -18,10 +41,12 @@ const CallHistoryItem = () => {
           <User2 size={'$2'} color={'$purple9'} />
         </Circle>
       </View>
-      <View style={styles.contactDetailsContainer}>
+      <View
+        onPress={handleSelectedNumberToCall}
+        style={styles.contactDetailsContainer}>
         <Text style={styles.contactNameTxt}>Ashish Yadav</Text>
         <Text fontSize={'$4'} color={'$gray10'}>
-          +91 9730502488
+          +919730502488
         </Text>
       </View>
       <View style={styles.callDetailsContainer}>
@@ -36,7 +61,7 @@ const CallHistoryItem = () => {
         <ChevronRight
           color={'$gray10'}
           size={'$1'}
-          onPress={() => navigation.navigate('contactDetailsScreen')}
+          onPress={handleShowFullDetails}
         />
       </View>
     </View>

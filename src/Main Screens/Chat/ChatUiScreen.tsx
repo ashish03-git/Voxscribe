@@ -80,8 +80,6 @@ const ChatUiScreen = () => {
             ...defaultTheme,
             colors: {...defaultTheme.colors, inputBackground: Colors.purple},
             borders:{...defaultTheme.borders, inputBorderRadius:10},
-            
-            // icons:{"documentIcon"}
           }}
           messages={messages}
           onSendPress={handleSendPress}

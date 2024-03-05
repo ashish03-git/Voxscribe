@@ -15,14 +15,13 @@ export const userAccountLogin = async (data: Payload) => {
       data.password,
     );
     if (response.user.uid) {
-      // console.log('navigate user to home screen>>>>>>>>');
-      return true;
+      return response.user.uid;
     } else {
-      return false;
+      return "";
     }
   } catch (error) {
     console.log('login failed >>>>>', error);
-    return false;
+    return "";
   }
 };
 

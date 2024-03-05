@@ -16,15 +16,27 @@ import {
   Videotape,
 } from '@tamagui/lucide-icons';
 import {useNavigation} from '@react-navigation/native';
-import {FlatList} from 'react-native';
+import {FlatList, Image} from 'react-native';
 import CallHistoryList from './CallHistoryList';
 import {RootStackNavigationList} from '../../Navigation/Navigation';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useSelector} from 'react-redux';
 
 type NavigationProps = StackNavigationProp<typeof RootStackNavigationList>;
+interface ContactDetails {
+  name: string;
+  phone: string;
+  img: string;
+  hasThumbnail: boolean;
+}
 
 const ContactDetails: React.FC = () => {
   const navigation = useNavigation<NavigationProps>();
+  const contactDetails: ContactDetails = useSelector(
+    state => state.redux_store.contact_full_Details,
+  );
+  // console.log('selected contact details>>>>', contactDetails);
+
   const incomingRecords = new Array(5);
   return (
     <View style={styles.container}>
@@ -43,11 +55,24 @@ const ContactDetails: React.FC = () => {
           />
         </View>
         <View style={styles.photoContainer}>
-          <Circle size={'$12'} backgroundColor={'$white3'}>
-            <User2 size={'$6'} color={'$purple9'} />
-          </Circle>
-          <Text style={styles.nameText}>Ashish Yadav</Text>
-          <Text style={styles.numberText}>+91 9739592488</Text>
+          {contactDetails.hasThumbnail ? (
+            <Circle size={'$12'} backgroundColor={'$white3'}>
+              <Image
+                source={{uri: contactDetails.img}}
+                width={120}
+                height={120}
+                borderRadius={60}
+                resizeMode="contain"
+              />
+            </Circle>
+          ) : (
+            <Circle size={'$12'} backgroundColor={'$white3'}>
+              <User2 size={'$6'} color={'$purple9'} />
+            </Circle>
+          )}
+
+          <Text style={styles.nameText}>{contactDetails.name}</Text>
+          <Text style={styles.numberText}>{contactDetails.phone}</Text>
         </View>
       </View>
       {/* mid container of all services */}

@@ -36,7 +36,7 @@ const CallHistoryList = () => {
         </View>
         <View style={styles.callDetails}>
           <Text style={styles.incomingText}>Outgoing call</Text>
-          <Text style={styles.incomingNumberText}>+91 9730592488</Text>
+          <Text style={styles.incomingNumberText}>+919730592488</Text>
         </View>
         <View style={styles.callTiming}>
           <Text style={styles.callTimingText}>30 min 10 sec</Text>

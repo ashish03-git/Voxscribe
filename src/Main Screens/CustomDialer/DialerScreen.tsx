@@ -27,6 +27,8 @@ import {useNavigation} from '@react-navigation/native';
 import Colors from '../../Extra/Colors';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackNavigationList} from '../../Navigation/Navigation';
+import {useDispatch, useSelector} from 'react-redux';
+import {update_selected_number_to_call} from '../../Redux/ReduxSlice';
 
 type StackScreenNavigationList = StackNavigationProp<
   typeof RootStackNavigationList,
@@ -40,6 +42,14 @@ const DialerScreen = () => {
   const [openDialer, setOpenDialer] = useState(true);
   const [userStartedEnteringNumber, setUserStartedEnteringNumber] =
     useState(false);
+
+  // dispatch
+  const dispatch = useDispatch();
+
+  // getting selected phone number from redux store
+  const selectedNumber = useSelector(
+    state => state.redux_store.selected_number_to_call,
+  );
 
   const handleDial = (phoneNumber: string) => {
     console.log('Dialing number:', phoneNumber);
@@ -58,12 +68,19 @@ const DialerScreen = () => {
   };
 
   const handleDelete = () => {
-    setPhoneNumber(phoneNumber.slice(0, -1));
+    if (selectedNumber.phone && selectedNumber.phone.length > 0) {
+      const newPhone = selectedNumber.phone.slice(0, -1);
+      console.log('new phone >>>>', newPhone);
+      dispatch(update_selected_number_to_call({phone: newPhone}));
+    } else {
+      // If there's no phone number from Redux, update the local state
+      const newPhoneNumber = phoneNumber.slice(0, -1);
+      setPhoneNumber(newPhoneNumber);
+    }
   };
 
   return (
     <View backgroundColor={'$white2'} style={styles.container}>
-
       {/* header */}
       <View backgroundColor={'$white1'} style={styles.headerContainer}>
         <ChevronLeftCircle
@@ -102,9 +119,9 @@ const DialerScreen = () => {
       {openDialer ? (
         <>
           <View style={styles.inputContainer}>
-            <View flex={3} alignItems="center">
+            <View flex={3} alignItems="center" justifyContent="center">
               <Text color={'green'} style={styles.dialedNumberTxt}>
-                {phoneNumber}
+                {selectedNumber.phone ? selectedNumber.phone : phoneNumber}
               </Text>
             </View>
 
@@ -148,7 +165,6 @@ const DialerScreen = () => {
           </View>
         </>
       ) : null}
-
     </View>
   );
 };
@@ -158,7 +174,7 @@ const DialerButton = ({number, onPress}: {number: string; onPress: any}) => {
     enableVibrateFallback: true,
     ignoreAndroidSystemSettings: false,
   };
-  HapticFeedback.trigger('keyboardPress',options);
+  HapticFeedback.trigger('keyboardPress', options);
   return (
     <Button
       style={styles.button}

@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: responsiveScreenWidth(3),
   },
   searchInput: {
-    width: responsiveWidth(78),
+    width: responsiveWidth(90),
     height: responsiveHeight(6),
     borderRadius: responsiveWidth(3),
     borderWidth: 1,

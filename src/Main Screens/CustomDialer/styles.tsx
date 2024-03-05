@@ -37,16 +37,17 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.purple,
   },
   inputContainer: {
-    flex: 1,
-    flexDirection:"row",
-    marginHorizontal:responsiveWidth(3),
-    marginBottom:responsiveWidth(4),
+    flex: 1.2,
+    flexDirection: 'row',
+    marginHorizontal: responsiveWidth(3),
+    // marginBottom: responsiveWidth(4),
     justifyContent: 'center',
-    alignItems: 'center',
-   
+    alignItems:"center"
   },
   dialedNumberTxt: {
-    fontSize: responsiveScreenFontSize(6),
+    // borderWidth: 2,
+    fontSize: responsiveScreenFontSize(5.2),
+    alignSelf:"center"
   },
   dialerContainer: {
     flex: 5,
