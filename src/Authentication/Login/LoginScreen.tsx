@@ -18,7 +18,10 @@ import Alert from '../../Extra/Alert';
 import {loginWithFacebool} from '../Social Login/loginWithFacebook';
 import {Formik, Field, Form, FormikHelpers} from 'formik';
 import {LoginValidationSchema} from '../ValidationSchema';
-import {useGetUserDetails} from '../../Hooks/Get Hooks/firebaseGetHooks';
+import {
+  useFetchAllUsers,
+  useGetUserDetails,
+} from '../../Hooks/Get Hooks/firebaseGetHooks';
 import {usePostContact} from '../../Hooks/Post Hooks/firebasePostHooks';
 import {useDispatch} from 'react-redux';
 import {add_firebaseUserId} from '../../Redux/ReduxSlice';
@@ -49,7 +52,6 @@ const LoginScreen: React.FC = () => {
     // navigation.navigate('tabScreens');
     // calling login function
     let userId: string = await userAccountLogin(values);
-
     if (userId) {
       setLoader(false);
       dispatch(add_firebaseUserId(userId));

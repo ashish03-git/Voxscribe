@@ -1,21 +1,12 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, Text, Circle, Button, Checkbox,Input} from 'tamagui';
-import {
-  ChevronLeftCircle,
-  ClipboardEdit,
-  Edit3,
-  PencilLine,
-  SquarePen,
-  User2,
-  UserCircle2,
-  Search
-} from '@tamagui/lucide-icons';
+import {View, Text, Circle, Button, Checkbox, Input} from 'tamagui';
+import {ChevronLeftCircle, SquarePen} from '@tamagui/lucide-icons';
 import styles from './styles';
-import Colors from '../../Extra/Colors';
 import {useNavigation} from '@react-navigation/native';
-import {FlatList} from 'react-native';
+import {FlatList, RefreshControl} from 'react-native';
 import ChatItem from './ChatItem';
-import { Icon } from '@rneui/base';
+import {useFetchAllUsers} from '../../Hooks/Get Hooks/firebaseGetHooks';
+
 
 interface Message {
   _id: number;
@@ -29,9 +20,32 @@ interface Message {
   };
 }
 
+interface UserType {
+  email: string;
+  name: string;
+  phone: string;
+  password: string;
+}
+
 const ChatScreen: React.FC = () => {
   const navigation = useNavigation();
-  const chatList = new Array(10);
+  const [availableUsers, setAvailableUsers] = useState<UserType[]>();
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
+  const getAllUsers = async () => {
+    let data: UserType[] = await useFetchAllUsers();
+    setAvailableUsers(data);
+    setRefreshing(false);
+  };
+
+  const onRefresh = () => {
+    getAllUsers();
+    setRefreshing(true);
+  };
+
   return (
     <View style={styles.container}>
       {/* header container */}
@@ -44,8 +58,8 @@ const ChatScreen: React.FC = () => {
         <SquarePen size={'$2'} color={'$gray10'} />
       </View>
 
-       {/* search input field */}
-       <View style={styles.selectedContainer}>
+      {/* search input field */}
+      <View style={styles.selectedContainer}>
         <Input
           fontSize="$6"
           placeholder="search here ..."
@@ -60,9 +74,12 @@ const ChatScreen: React.FC = () => {
       {/* body container  */}
       <View style={styles.bodyContainer}>
         <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           showsVerticalScrollIndicator={false}
-          data={chatList}
-          renderItem={({item}) => <ChatItem />}
+          data={availableUsers}
+          renderItem={({item}) => <ChatItem item={item as UserType} />}
         />
       </View>
     </View>

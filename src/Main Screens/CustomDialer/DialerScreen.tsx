@@ -11,7 +11,7 @@ import {
 } from '@tamagui/lucide-icons';
 import React, {useState} from 'react';
 import HapticFeedback from 'react-native-haptic-feedback';
-import {FlatList} from 'react-native';
+import {Alert, FlatList} from 'react-native';
 import {View, Text, Button, Circle, Square} from 'tamagui';
 import {
   ChevronLeftCircle,
@@ -51,9 +51,19 @@ const DialerScreen = () => {
     state => state.redux_store.selected_number_to_call,
   );
 
-  const handleDial = (phoneNumber: string) => {
-    console.log('Dialing number:', phoneNumber);
-    // Add logic here to handle dialing the number
+  const handleDial = () => {
+    // console.log(selectedNumber.phone.length);
+    
+    if (phoneNumber.length >= 10 || selectedNumber.phone.length >= 10) {
+      navigation.navigate('activeCallScreen');
+    } else {
+      Alert.alert('Calling failed', 'please enter a vaild number', [
+        {
+          text: 'OK',
+          onPress: () => {},
+        },
+      ]);
+    }
   };
 
   const handleNumberPress = (num: string) => {
@@ -70,7 +80,7 @@ const DialerScreen = () => {
   const handleDelete = () => {
     if (selectedNumber.phone && selectedNumber.phone.length > 0) {
       const newPhone = selectedNumber.phone.slice(0, -1);
-      console.log('new phone >>>>', newPhone);
+      // console.log('new phone >>>>', newPhone);
       dispatch(update_selected_number_to_call({phone: newPhone}));
     } else {
       // If there's no phone number from Redux, update the local state
@@ -158,7 +168,7 @@ const DialerScreen = () => {
               <Button
                 style={styles.callButton}
                 backgroundColor={'$green11Dark'}
-                onPress={() => handleDial}>
+                onPress={handleDial}>
                 <PhoneCall size={'$2.5'} color="white" />
               </Button>
             </View>

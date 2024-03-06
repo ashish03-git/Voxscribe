@@ -14,6 +14,7 @@ import DialerScreen from '../Main Screens/CustomDialer/DialerScreen';
 import Testing from '../Extra/Testing';
 import ContactDetails from '../Main Screens/Contact Details/ContactDetails';
 import ChatUiScreen from '../Main Screens/Chat/ChatUiScreen';
+import ActiveCallScreen from '../Main Screens/Call Screen/ActiveCallScreen';
 // import { CallScreen } from '../CallScreen';
 
 const Stack = createStackNavigator();
@@ -26,9 +27,10 @@ export const RootStackNavigationList = {
   discoverScreen: undefined,
   profileScreen: undefined,
   tabScreens: undefined,
-  contactDetailsScreen:undefined,
-  videoCallScreen:undefined,
-  chatUiScreen:undefined
+  contactDetailsScreen: undefined,
+  videoCallScreen: undefined,
+  chatUiScreen: undefined,
+  activeCallScreen: undefined,
 };
 
 const Navigation = () => {
@@ -95,6 +97,12 @@ const Navigation = () => {
           options={{headerShown: false}}
           component={DialerScreen}
         />
+        <Stack.Screen
+          name="activeCallScreen"
+          options={{headerShown: false}}
+          component={ActiveCallScreen}
+        />
+
         <Stack.Screen
           name="contactDetailsScreen"
           options={{headerShown: false}}

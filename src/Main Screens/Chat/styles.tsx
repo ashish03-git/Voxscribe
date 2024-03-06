@@ -76,10 +76,19 @@ const styles = StyleSheet.create({
     width: responsiveScreenWidth(100),
     height: responsiveScreenHeight(90),
   },
+  chatui_backBtn: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   chatui_name: {
-    fontSize: responsiveScreenFontSize(2.4),
+    fontSize: responsiveScreenFontSize(2.5),
     color: 'white',
     fontWeight: 'bold',
+  },
+  chatui_number: {
+    fontSize: responsiveScreenFontSize(1.8),
+    color: 'white',
   },
   chatui_headerContainer: {
     width: responsiveScreenWidth(100),
@@ -89,10 +98,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.purple,
   },
+  chatui_userimg: {
+    flex: 2,
+    justifyContent: 'flex-start',
+  },
+  chatui_userDetails: {
+    flex: 4,
+    justifyContent: 'center',
+  },
   chatui_headerUserDetails: {
     flex: 4,
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
 });
 

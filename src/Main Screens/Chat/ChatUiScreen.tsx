@@ -1,7 +1,6 @@
 import {Chat, MessageType, defaultTheme} from '@flyerhq/react-native-chat-ui';
 import {
   ChevronLeft,
-  ChevronLeftCircle,
   ChevronRightCircle,
   MoreVertical,
   User,
@@ -13,6 +12,7 @@ import styles from './styles';
 import {StatusBar} from 'react-native';
 import Colors from '../../Extra/Colors';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 // For the testing purposes, you should probably use https://github.com/uuidjs/uuid
 const uuidv4 = () => {
@@ -24,22 +24,34 @@ const uuidv4 = () => {
 };
 
 const ChatUiScreen = () => {
-  const [messages, setMessages] = useState<MessageType.Any[]>([]);
-  const user = {id: '06c33e8b-e835-4736-80f4-63f44b66666c'};
+  const [allMessages, setAllMessages] = useState<MessageType.Any[]>([]);
+  const [usersMessages, setUsersMessages] = useState<MessageType.Any[]>([]);
+  const [reciversMessages, setReciversMessage] = useState<MessageType.Any[]>(
+    [],
+  );
 
-  const addMessage = (message: MessageType.Any) => {
-    setMessages([message, ...messages]);
-  };
+  const user = useSelector(state => state.redux_store.selected_chat_user);
+  const currentUser = {id: '06c33e8b-e835-4736-80f4-63f44b66666c'};
+  const recipientUser = {id: 'recipient-user-id'};
 
   const handleSendPress = (message: MessageType.PartialText) => {
-    const textMessage: MessageType.Text = {
-      author: user,
+    const sentMessage: MessageType.Text = {
+      author: currentUser,
       createdAt: Date.now(),
       id: uuidv4(),
       text: message.text,
       type: 'text',
     };
-    addMessage(textMessage);
+  
+    const receivedMessage: MessageType.Text = {
+      author: recipientUser,
+      createdAt: Date.now(),
+      id: uuidv4(),
+      text:"This is the machine generated message.",
+      type: 'text',
+    };
+
+    setAllMessages([receivedMessage, sentMessage, ...allMessages]);
   };
 
   const navigation = useNavigation();
@@ -51,39 +63,48 @@ const ChatUiScreen = () => {
       {/* chat header container */}
       <View style={styles.chatui_headerContainer}>
         <View style={styles.chatui_headerUserDetails}>
-          <ChevronLeft
-            size={'$2'}
-            color={'white'}
-            onPress={() => navigation.goBack()}
-          />
-          <Circle
-            size={'$5'}
-            backgroundColor={'$white2'}
-            marginHorizontal={'$4'}>
-            <User size={'$2.5'} color={'$purple9'} />
-          </Circle>
-          <Text color={'$white1'} style={styles.chatui_name}>
-            Ashish Yadav
-          </Text>
-         
+          <View style={styles.chatui_backBtn}>
+            <ChevronLeft
+              size={'$2'}
+              color={'white'}
+              onPress={() => navigation.goBack()}
+            />
+          </View>
+          <View>
+            <Circle
+              size={'$5'}
+              backgroundColor={'$white2'}
+              marginHorizontal={'$4'}>
+              <User size={'$2.5'} color={'$purple9'} />
+            </Circle>
+          </View>
+          <View style={styles.chatui_userDetails}>
+            <Text color={'$white1'} style={styles.chatui_name}>
+              {user.name}
+            </Text>
+            <Text color={'$white1'} style={styles.chatui_number}>
+              {user.phone}
+            </Text>
+          </View>
         </View>
         <View flex={1} justifyContent="center" alignItems="center">
           <MoreVertical size={'$2'} color={'$white1'} />
         </View>
       </View>
+
       {/* chat ui container */}
-      <View flex={10} backgroundColor={"$white1"}>
+      <View flex={10} backgroundColor={'$white1'}>
         <Chat
-          l10nOverride={{ inputPlaceholder: 'type message' }}
+          l10nOverride={{inputPlaceholder: 'type message'}}
           sendButtonVisibilityMode="always"
           theme={{
             ...defaultTheme,
             colors: {...defaultTheme.colors, inputBackground: Colors.purple},
-            borders:{...defaultTheme.borders, inputBorderRadius:10},
+            borders: {...defaultTheme.borders, inputBorderRadius: 10},
           }}
-          messages={messages}
+          messages={allMessages}
           onSendPress={handleSendPress}
-          user={user}
+          user={currentUser}
         />
       </View>
     </SafeAreaProvider>
