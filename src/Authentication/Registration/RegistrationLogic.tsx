@@ -50,6 +50,7 @@ const createUserInFirestore = async (
   uid: string,
   values: MyFormRegistration,
 ) => {
+  const userDetails = values.id = uid;
   await db
     .collection('users')
     .doc(uid)

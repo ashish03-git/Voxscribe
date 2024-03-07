@@ -15,6 +15,7 @@ interface UserTypeProps {
     name: string;
     phone: string;
     password: string;
+    id:string;
   };
 }
 
@@ -22,6 +23,8 @@ const ChatItem: React.FC<UserTypeProps> = ({item}) => {
   const navigation = useNavigation<NavigationProps>();
   const dispatch = useDispatch();
   const handleChatItemClick = () => {
+    // console.log(typeof item);
+    
     dispatch(add_selected_chat_user(item));
     navigation.navigate('chatUiScreen');
   };

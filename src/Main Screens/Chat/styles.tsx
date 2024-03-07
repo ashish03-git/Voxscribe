@@ -111,6 +111,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // alignItems: 'center',
   },
+  message: {
+    padding: 10,
+    margin: 4,
+    borderRadius: 4,
+  },
+  sent: {
+    backgroundColor: '#DCF8C6',
+    alignSelf: 'flex-end',
+  },
+  received: {
+    backgroundColor: '#EAEAEA',
+    alignSelf: 'flex-start',
+  },
 });
 
 export default styles;

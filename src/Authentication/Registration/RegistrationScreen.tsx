@@ -25,6 +25,7 @@ type RegisterScreenProps = StackNavigationProp<
 export interface MyFormRegistration extends MyFormValues {
   name: string;
   phone: string;
+  id: string;
 }
 
 const RegistrationScreen: React.FC = () => {
@@ -36,6 +37,7 @@ const RegistrationScreen: React.FC = () => {
     email: '',
     password: '',
     phone: '',
+    id: '',
   };
   let handleRegistrationWithGoogle = loginWithGoogle();
 
@@ -146,10 +148,14 @@ const RegistrationScreen: React.FC = () => {
                 )}
 
                 {registrationStatus ? (
-                  <Text style={styles.success}>user registered successfully</Text>
-                ) : (registrationStatus==false)?(
-                  <Text style={styles.failure}>user registration is failed</Text>
-                ):null}
+                  <Text style={styles.success}>
+                    user registered successfully
+                  </Text>
+                ) : registrationStatus == false ? (
+                  <Text style={styles.failure}>
+                    user registration is failed
+                  </Text>
+                ) : null}
                 <Button
                   disabled={!isValid}
                   onPress={() => handleSubmit()}

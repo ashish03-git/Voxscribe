@@ -3,9 +3,10 @@ import {
   ChevronLeft,
   ChevronRightCircle,
   MoreVertical,
+  SendHorizontal,
   User,
 } from '@tamagui/lucide-icons';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Circle, Text, View} from 'tamagui';
 import styles from './styles';
@@ -13,47 +14,212 @@ import {StatusBar} from 'react-native';
 import Colors from '../../Extra/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
-
-// For the testing purposes, you should probably use https://github.com/uuidjs/uuid
-const uuidv4 = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-    const r = Math.floor(Math.random() * 16);
-    const v = c === 'x' ? r : (r % 4) + 8;
-    return v.toString(16);
-  });
-};
+import {
+  fetchMyConversation,
+  useGetUserDetails,
+} from '../../Hooks/Get Hooks/firebaseGetHooks';
+import {firebase} from '@react-native-firebase/firestore';
+import {Bubble, GiftedChat, Send} from 'react-native-gifted-chat';
+import {
+  responsiveScreenFontSize,
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+} from 'react-native-responsive-dimensions';
+import Icon from 'react-native-vector-icons/Ionicons';
+interface MessageObject {
+  text: string;
+  createdAt: string;
+  senderId: string;
+  receiverId: string;
+}
 
 const ChatUiScreen = () => {
-  const [allMessages, setAllMessages] = useState<MessageType.Any[]>([]);
-  const [usersMessages, setUsersMessages] = useState<MessageType.Any[]>([]);
-  const [reciversMessages, setReciversMessage] = useState<MessageType.Any[]>(
-    [],
+  const [messages, setMessages] = useState([]);
+  const currentUserId = useSelector(state => state.redux_store.firebaseUserId);
+  const RecipientUser = useSelector(
+    state => state.redux_store.selected_chat_user,
   );
+  const recipientUserId = RecipientUser.id;
 
-  const user = useSelector(state => state.redux_store.selected_chat_user);
-  const currentUser = {id: '06c33e8b-e835-4736-80f4-63f44b66666c'};
-  const recipientUser = {id: 'recipient-user-id'};
+  // useEffect(() => {
+  //   // if (!currentUserId || !recipientUserId) {
+  //   //   console.error('currentUserId or recipientUserId is undefined');
+  //   //   return;
+  //   // }
 
-  const handleSendPress = (message: MessageType.PartialText) => {
-    const sentMessage: MessageType.Text = {
-      author: currentUser,
-      createdAt: Date.now(),
-      id: uuidv4(),
-      text: message.text,
-      type: 'text',
+  //   // const chatId1 = currentUserId + recipientUserId;
+
+  //   // const unsubscribe = firebase
+  //   //   .firestore()
+  //   //   .collection('chats')
+  //   //   .doc(chatId1)
+  //   //   .collection('messages')
+  //   //   .orderBy('createdAt', 'desc')
+  //   //   .onSnapshot(querySnapshot => {
+  //   //     const messages = querySnapshot.docs.map(doc => {
+  //   //       const firebaseData = doc.data();
+  //   //       const message = {
+  //   //         _id: doc.id,
+  //   //         text: firebaseData.text,
+  //   //         createdAt: new Date(firebaseData.createdAt),
+  //   //         user: {
+  //   //           _id: firebaseData.senderId === currentUserId ? 1 : 2, // Assign unique id for sender and recipient
+  //   //           name:
+  //   //             firebaseData.senderId === currentUserId
+  //   //               ? 'You'
+  //   //               : RecipientUser.name, // Set the name accordingly
+  //   //         },
+  //   //       };
+  //   //       return message;
+  //   //     });
+  //   //     setMessages(messages);
+  //   //   });
+
+  //   // return () => unsubscribe();
+
+  //   fetchMyConversationsData();
+  // }, [currentUserId, recipientUserId]);
+
+  // const fetchMyConversationsData = async () => {
+  //   let data = await fetchMyConversation(currentUserId, recipientUserId);
+  //   console.log('no data is found',data());
+  // };
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // Call fetchMyConversation to get the unsubscribe function
+  //       const unsubscribe = await fetchMyConversation(currentUserId, recipientUserId);
+
+  //       // Check if unsubscribe is a function before returning
+  //       if (typeof unsubscribe === 'function') {
+  //         // Return the unsubscribe function to be used for cleanup
+  //         return unsubscribe;
+  //       } else {
+  //         // Handle the case where fetchMyConversation doesn't return a function
+  //         console.error('Unsubscribe function not returned');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching conversation:', error);
+  //     }
+  //   };
+
+  //   // Call fetchData to start fetching conversations
+  //   const unsubscribe = fetchData();
+
+  //   // Return a cleanup function to unsubscribe when the component unmounts or when the dependencies change
+  //   return () => {
+  //     if (unsubscribe && typeof unsubscribe === 'function') {
+  //       unsubscribe(); // Unsubscribe from Firestore listener
+  //     }
+  //   };
+  // }, [currentUserId, recipientUserId]);
+
+  // const unsubscribe = fetchMyConversation(currentUserId, recipientUserId);
+
+  // Assuming you have a state variable to store messages, initialize it
+  // const [messages, setMessages] = useState([]);
+
+  // Inside a useEffect hook (or any other appropriate lifecycle method), subscribe to changes
+
+  useEffect(() => {
+    // Subscribe to changes in conversation and update messages when changes occur
+    const fetchData = async () => {
+      try {
+        const unsubscribe = await fetchMyConversation(
+          currentUserId,
+          recipientUserId,
+          setMessages,
+        );
+        // Clean up the subscription when component unmounts
+        return () => {
+          unsubscribe();
+        };
+      } catch (error) {
+        console.error('Error fetching conversation:', error);
+      }
     };
-  
-    const receivedMessage: MessageType.Text = {
-      author: recipientUser,
-      createdAt: Date.now(),
-      id: uuidv4(),
-      text:"This is the machine generated message.",
-      type: 'text',
+
+    fetchData();
+  }, [currentUserId, recipientUserId]);
+
+  const onSend = async (newMessages = []) => {
+    const sentMessage = newMessages[0];
+    const chatId1 = currentUserId + recipientUserId;
+    const chatId2 = recipientUserId + currentUserId;
+
+    const messageObject: MessageObject = {
+      text: sentMessage.text,
+      createdAt: sentMessage.createdAt.getTime(),
+      senderId: currentUserId,
+      receiverId: recipientUserId,
     };
 
-    setAllMessages([receivedMessage, sentMessage, ...allMessages]);
+    await firebase
+      .firestore()
+      .collection('chats')
+      .doc(chatId1)
+      .collection('messages')
+      .add(messageObject);
+
+    await firebase
+      .firestore()
+      .collection('chats')
+      .doc(chatId2)
+      .collection('messages')
+      .add(messageObject);
   };
 
+  const CustomBubble = props => (
+    <Bubble
+      {...props}
+      wrapperStyle={{
+        left: {
+          borderRadius:responsiveScreenWidth(2),
+          borderBottomLeftRadius:responsiveScreenWidth(2),
+          borderBottomRightRadius:responsiveScreenWidth(0),
+          paddingHorizontal:responsiveScreenWidth(1),
+          marginTop:responsiveScreenWidth(1),
+          backgroundColor: 'white', // Customize bubble background color for received messages
+        },
+        right: {
+
+          borderRadius:responsiveScreenWidth(2),
+          borderBottomLeftRadius:responsiveScreenWidth(0),
+          borderTopRightRadius:responsiveScreenWidth(2),
+          borderBottomRightRadius:responsiveScreenWidth(2),
+          paddingHorizontal:responsiveScreenWidth(1),
+          paddingTop:responsiveScreenWidth(1),
+          marginTop:responsiveScreenWidth(1),
+          backgroundColor: Colors.purple, // Customize bubble background color for sent messages
+        },
+      }}
+    />
+  );
+
+  const CustomSend = props => {
+    return (
+      <Send {...props}>
+        <View
+        backgroundColor={"$purple9"}
+          style={{
+            width: responsiveScreenWidth(12),
+            height: responsiveScreenWidth(12),
+            borderRadius: responsiveScreenWidth(7),
+            marginLeft: responsiveScreenWidth(3),
+            marginBottom: responsiveScreenWidth(2),
+            justifyContent: 'center',
+            alignItems: 'center',
+            // backgroundColor: "",
+          }}>
+          <SendHorizontal size={'$2'} color={"$white1"} />
+          {/* <Icon name="send" size={28} color={Colors.purple} /> */}
+        </View>
+
+        {/* Customize icon as per your requirement */}
+      </Send>
+    );
+  };
   const navigation = useNavigation();
 
   return (
@@ -80,10 +246,10 @@ const ChatUiScreen = () => {
           </View>
           <View style={styles.chatui_userDetails}>
             <Text color={'$white1'} style={styles.chatui_name}>
-              {user.name}
+              {RecipientUser.name}
             </Text>
             <Text color={'$white1'} style={styles.chatui_number}>
-              {user.phone}
+              {RecipientUser.phone}
             </Text>
           </View>
         </View>
@@ -93,18 +259,53 @@ const ChatUiScreen = () => {
       </View>
 
       {/* chat ui container */}
-      <View flex={10} backgroundColor={'$white1'}>
-        <Chat
-          l10nOverride={{inputPlaceholder: 'type message'}}
-          sendButtonVisibilityMode="always"
-          theme={{
-            ...defaultTheme,
-            colors: {...defaultTheme.colors, inputBackground: Colors.purple},
-            borders: {...defaultTheme.borders, inputBorderRadius: 10},
+      <View flex={10} backgroundColor={'$white4'}>
+        <GiftedChat
+           timeTextStyle={{
+            color: 'black', // Customize color of the timestamp text
+            fontSize: 12, // Customize font size of the timestamp text
+            fontStyle: 'italic', // Add additional styles such as italic
           }}
-          messages={allMessages}
-          onSendPress={handleSendPress}
-          user={currentUser}
+          alwaysShowSend={true}
+          renderBubble={props => <CustomBubble {...props} />}
+          renderSend={props => <CustomSend {...props} />}
+          isLoadingEarlier={false}
+          messages={messages}
+          onSend={newMessages => onSend(newMessages)}
+          user={{
+            _id: 1,
+          }}
+          textInputProps={{
+            style: {
+              width: responsiveScreenWidth(80),
+              backgroundColor: 'white',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 5,
+              paddingHorizontal: 10,
+              paddingVertical: responsiveScreenWidth(3),
+              fontSize: responsiveScreenFontSize(2),
+            },
+            placeholderTextColor: 'gray',
+          }}
+          renderAvatar={null} // Hide avatars if not required
+          renderUsernameOnMessage={true} // Show username on messages
+          // Style for the GiftedChat container
+          containerStyle={{
+            // height:responsiveScreenHeight(8),
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor:"white",
+            paddingVertical: responsiveScreenWidth(2),
+            // marginBottom:responsiveScreenHeight(5)
+          }}
+          // containerStyle={{
+          //   // backgroundColor: Colors.purple, // Set background color of the container
+          //   height:responsiveScreenHeight(8),
+          //   // paddingVertical: 10, // Adjust padding as needed
+          //   paddingHorizontal: 10, // Adjust
+          //   // paddingBottom:responsiveScreenWidth(3)
+          // }}
         />
       </View>
     </SafeAreaProvider>
