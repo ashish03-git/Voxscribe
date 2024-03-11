@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, Button, InputFrame} from 'tamagui';
 import {Facebook, Github, Phone, Twitter} from '@tamagui/lucide-icons';
 import {ActivityIndicator, SafeAreaView, TextInput} from 'react-native';
-import {Input, Dialog} from '@rneui/themed';
 import {Icon} from '@rneui/themed';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -18,14 +17,9 @@ import Alert from '../../Extra/Alert';
 import {loginWithFacebool} from '../Social Login/loginWithFacebook';
 import {Formik, Field, Form, FormikHelpers} from 'formik';
 import {LoginValidationSchema} from '../ValidationSchema';
-import {
-  useFetchAllUsers,
-  useGetUserDetails,
-} from '../../Hooks/Get Hooks/firebaseGetHooks';
-import {usePostContact} from '../../Hooks/Post Hooks/firebasePostHooks';
 import {useDispatch} from 'react-redux';
 import {add_firebaseUserId} from '../../Redux/ReduxSlice';
-
+import TouchId from 'react-native-touch-id';
 type LoginScreenProps = StackNavigationProp<typeof RootStackNavigationList>;
 export interface MyFormValues {
   email: string;

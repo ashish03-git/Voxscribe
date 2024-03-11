@@ -15,6 +15,7 @@ import {responsiveHeight} from 'react-native-responsive-dimensions';
 import {Icon} from '@rneui/base';
 import Colors from '../../Extra/Colors';
 import {useSelector} from 'react-redux';
+import {Sheet} from 'tamagui';
 
 interface Message {
   _id: number;
@@ -40,9 +41,9 @@ const ChatScreen: React.FC = () => {
   const navigation = useNavigation();
   const [availableUsers, setAvailableUsers] = useState<UserType[]>();
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [bottomSheet, setBottomSheet] = useState<boolean>(false);
   const currentUserId = useSelector(state => state.redux_store.firebaseUserId);
-  // console.log(currentUserId);
-
+  const [select, setSelect] = useState<boolean>(false);
   useEffect(() => {
     getAllUsers();
   }, []);
@@ -66,6 +67,15 @@ const ChatScreen: React.FC = () => {
     setRefreshing(true);
   };
 
+  const handleShowAllUserList = () => {
+    setBottomSheet(!bottomSheet);
+  };
+
+  const selectChat = () => {
+    // console.log("hiii");
+    setSelect(!select);
+  };
+
   return (
     <View style={styles.container}>
       {/* header container */}
@@ -75,7 +85,7 @@ const ChatScreen: React.FC = () => {
           color={'$gray10'}
           onPress={() => navigation.goBack()}
         />
-        <SquarePen size={'$2'} color={'$gray10'} />
+        <SquarePen onPress={selectChat} size={'$2'} color={'$gray10'} />
       </View>
 
       {/* search input field */}
@@ -100,10 +110,13 @@ const ChatScreen: React.FC = () => {
           }
           showsVerticalScrollIndicator={false}
           data={availableUsers}
-          renderItem={({item}) => <ChatItem item={item as UserType} />}
+          renderItem={({item}) => (
+            <ChatItem item={item as UserType} select={select} />
+          )}
         />
 
         <Circle
+          onPress={handleShowAllUserList}
           size={'$7'}
           backgroundColor={'$purple9'}
           position="absolute"
@@ -117,6 +130,42 @@ const ChatScreen: React.FC = () => {
           />
         </Circle>
       </View>
+
+      {/* bottom sheet */}
+      <Sheet open={bottomSheet}>
+        <Sheet.Overlay />
+        <Sheet.Handle marginHorizontal={'$19'} />
+        <Sheet.Frame>
+          <View flex={1}>
+            <View flex={1} justifyContent="center">
+              <Text fontSize={'$8'} fontWeight={'bold'} marginLeft={'$3'}>
+                Available Users
+              </Text>
+              <Input
+                fontSize="$6"
+                placeholder="search here ..."
+                style={styles.searchInput}
+                borderRadius="$10"
+              />
+            </View>
+            <View flex={5} alignItems="center">
+              <FlatList
+                style={{marginBottom: responsiveHeight(15)}}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }
+                showsVerticalScrollIndicator={false}
+                data={availableUsers}
+                renderItem={({item}) => <ChatItem item={item as UserType} />}
+              />
+            </View>
+          </View>
+        </Sheet.Frame>
+      </Sheet>
+
     </View>
   );
 };

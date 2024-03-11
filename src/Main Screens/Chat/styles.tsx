@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     height: responsiveHeight(6),
     borderRadius: responsiveWidth(3),
     borderWidth: 1,
+    alignSelf: 'center',
   },
   contactListContainer: {
     flexDirection: 'row',
@@ -123,6 +124,35 @@ const styles = StyleSheet.create({
   received: {
     backgroundColor: '#EAEAEA',
     alignSelf: 'flex-start',
+  },
+
+  // dialog styles
+  dialogContentContainer: {
+    width: responsiveScreenWidth(96),
+    height: responsiveScreenHeight(60),
+  },
+  dialogCloseBtn: {
+    width: responsiveScreenWidth(10),
+    height: responsiveScreenWidth(10),
+    borderRadius: responsiveScreenWidth(10),
+    position: 'absolute',
+    zIndex: 10,
+    top: 0,
+    right: 0,
+  },
+  dialogProfileImageContainer: {
+    flex: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // backgroundColor:'red'
+  },
+  dialogNameText: {
+    fontSize: responsiveScreenFontSize(2.8),
+    position: 'absolute',
+    top: 5,
+    left: 5,
+    zIndex:10
+    // fontWeight: 'bold',
   },
 });
 

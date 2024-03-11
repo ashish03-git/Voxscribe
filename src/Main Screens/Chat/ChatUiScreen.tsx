@@ -25,7 +25,7 @@ import {
   responsiveScreenHeight,
   responsiveScreenWidth,
 } from 'react-native-responsive-dimensions';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {CustomBubble, CustomSend} from './CustomisedChatUi';
 interface MessageObject {
   text: string;
   createdAt: string;
@@ -170,56 +170,6 @@ const ChatUiScreen = () => {
       .add(messageObject);
   };
 
-  const CustomBubble = props => (
-    <Bubble
-      {...props}
-      wrapperStyle={{
-        left: {
-          borderRadius:responsiveScreenWidth(2),
-          borderBottomLeftRadius:responsiveScreenWidth(2),
-          borderBottomRightRadius:responsiveScreenWidth(0),
-          paddingHorizontal:responsiveScreenWidth(1),
-          marginTop:responsiveScreenWidth(1),
-          backgroundColor: 'white', // Customize bubble background color for received messages
-        },
-        right: {
-
-          borderRadius:responsiveScreenWidth(2),
-          borderBottomLeftRadius:responsiveScreenWidth(0),
-          borderTopRightRadius:responsiveScreenWidth(2),
-          borderBottomRightRadius:responsiveScreenWidth(2),
-          paddingHorizontal:responsiveScreenWidth(1),
-          paddingTop:responsiveScreenWidth(1),
-          marginTop:responsiveScreenWidth(1),
-          backgroundColor: Colors.purple, // Customize bubble background color for sent messages
-        },
-      }}
-    />
-  );
-
-  const CustomSend = props => {
-    return (
-      <Send {...props}>
-        <View
-        backgroundColor={"$purple9"}
-          style={{
-            width: responsiveScreenWidth(12),
-            height: responsiveScreenWidth(12),
-            borderRadius: responsiveScreenWidth(7),
-            marginLeft: responsiveScreenWidth(3),
-            marginBottom: responsiveScreenWidth(2),
-            justifyContent: 'center',
-            alignItems: 'center',
-            // backgroundColor: "",
-          }}>
-          <SendHorizontal size={'$2'} color={"$white1"} />
-          {/* <Icon name="send" size={28} color={Colors.purple} /> */}
-        </View>
-
-        {/* Customize icon as per your requirement */}
-      </Send>
-    );
-  };
   const navigation = useNavigation();
 
   return (
@@ -261,11 +211,6 @@ const ChatUiScreen = () => {
       {/* chat ui container */}
       <View flex={10} backgroundColor={'$white4'}>
         <GiftedChat
-           timeTextStyle={{
-            color: 'black', // Customize color of the timestamp text
-            fontSize: 12, // Customize font size of the timestamp text
-            fontStyle: 'italic', // Add additional styles such as italic
-          }}
           alwaysShowSend={true}
           renderBubble={props => <CustomBubble {...props} />}
           renderSend={props => <CustomSend {...props} />}
@@ -295,7 +240,7 @@ const ChatUiScreen = () => {
             // height:responsiveScreenHeight(8),
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor:"white",
+            backgroundColor: 'white',
             paddingVertical: responsiveScreenWidth(2),
             // marginBottom:responsiveScreenHeight(5)
           }}

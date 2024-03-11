@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import auth from "@react-native-firebase/auth"
 import useContact from '../useContact';
 
 export const usePostContact = async () => {
@@ -18,3 +19,8 @@ export const usePostContact = async () => {
       .catch(() => console.log('failed to save contact details in firestore'));
   }
 };
+
+
+export const useUpdatePassword = async () => {
+  
+}
