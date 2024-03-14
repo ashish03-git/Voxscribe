@@ -11,11 +11,13 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {useNavigation} from '@react-navigation/native';
-import {loginWithGoogle} from '../Social Login/loginWithGoogle';
+// import {loginWithGoogle} from '../Social Login/loginWithGoogle';
 import {MyFormValues} from '../Login/LoginScreen';
 import {Formik, Form, FormikHelpers} from 'formik';
 import {RegistrationValidationSchema} from '../ValidationSchema';
 import {registerUser} from './RegistrationLogic';
+
+import {customGoogleSignIn} from '../Social Login/loginWithGoogle';
 
 type RegisterScreenProps = StackNavigationProp<
   typeof RootStackNavigationList,
@@ -32,6 +34,7 @@ const RegistrationScreen: React.FC = () => {
   const navigation = useNavigation<RegisterScreenProps>();
   const [loader, setLoader] = useState<boolean>(false);
   const [registrationStatus, setRegistrationStatus] = useState<boolean>();
+
   const initialValues: MyFormRegistration = {
     name: '',
     email: '',
@@ -39,7 +42,8 @@ const RegistrationScreen: React.FC = () => {
     phone: '',
     id: '',
   };
-  let handleRegistrationWithGoogle = loginWithGoogle();
+
+  let handleRegistrationWithGoogle = customGoogleSignIn();
 
   const handleRegistration = (
     values: MyFormRegistration,
@@ -178,7 +182,7 @@ const RegistrationScreen: React.FC = () => {
         {/* Social Icon Container */}
         <View style={styles.socialIconContainer}>
           <Button
-            onPress={handleRegistrationWithGoogle}
+            onPress={()=>customGoogleSignIn()}
             backgroundColor={'$white2'}
             style={styles.icon}>
             <Icon

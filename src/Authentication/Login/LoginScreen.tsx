@@ -20,6 +20,10 @@ import {LoginValidationSchema} from '../ValidationSchema';
 import {useDispatch} from 'react-redux';
 import {add_firebaseUserId} from '../../Redux/ReduxSlice';
 import TouchId from 'react-native-touch-id';
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin, statusCodes, GoogleSigninButton } from '@react-native-google-signin/google-signin';
+
+
 type LoginScreenProps = StackNavigationProp<typeof RootStackNavigationList>;
 export interface MyFormValues {
   email: string;
@@ -32,6 +36,7 @@ const LoginScreen: React.FC = () => {
   const [showAlert, setShowAlert] = useState(true);
   const [loginFailed, setLoginFailed] = useState<boolean>(false);
   const initialValues: MyFormValues = {email: '', password: ''};
+  const [state, setState] = useState();
   const dispatch = useDispatch();
   const updateParentState = (newValue: boolean) => {
     setLoginFailed(newValue);
@@ -57,8 +62,61 @@ const LoginScreen: React.FC = () => {
     setSubmitting(false);
   };
 
+  // useEffect(() => {
+  //   GoogleSignin.configure({
+  //     webClientId:
+  //       '494688737824-f5k9i6mfcid7l67vjd1spe9rbptrfkue.apps.googleusercontent.com',
+  //   });
+  // }, []);
+
+  //  const _signInWithGoogle = async () => {
+  //     try {
+  //       GoogleSignin.configure({
+  //         offlineAccess: false,
+  //         webClientId: '494688737824-hp8913gg0llf965fit64ojrj7fo5j33b.apps.googleusercontent.com',
+  //         scopes: ['profile', 'email'],
+  //       });
+  //       await GoogleSignin.hasPlayServices();
+  //       const userInfo = await GoogleSignin.signIn();
+
+  //       const {idToken} = await GoogleSignin.signIn();
+  //       const googleCredentials = auth.GoogleAuthProvider.credential(idToken);
+  //       auth().signInWithCredential(googleCredentials);
+  //       return userInfo;
+  //     } catch (error) {
+  //       console.log('=> Google Sign In', error);
+  //       return null;
+  //     }
+  //   };
+
   // usePostContact()
 
+  const webClientId =
+    '494688737824-qvqh8m0uga7hbc9ku8t3shuvnpo0keep.apps.googleusercontent.com';
+
+    useEffect(()=>{
+      GoogleSignin.configure({
+        webClientId: webClientId,
+      });
+    },[])
+  // Somewhere in your code
+  const googleLogin = async () => {
+    try {
+        await GoogleSignin.hasPlayServices();
+        const userInfo = await GoogleSignin.signIn();
+        console.log("userinfo", userInfo);
+
+    } catch (error:any) {
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+            console.log(error)
+        } else if (error.code === statusCodes.IN_PROGRESS) {
+            console.log(error)
+        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+            console.log(error)
+        } else {
+        }
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       {loginFailed ? (
@@ -147,7 +205,11 @@ const LoginScreen: React.FC = () => {
             {/* Social Icon Container */}
             <View style={styles.socialIconContainer}>
               <Button
-                // onPress={loginWithGoogle}
+                onPress={() =>
+                  googleLogin()
+                    .then(response => console.log(response))
+                    .catch(error => console.log(error))
+                }
                 backgroundColor={'$white2'}
                 style={styles.icon}>
                 <Icon

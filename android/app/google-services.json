@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "494688737824",
+    "firebase_url": "https://voxscribe-031001-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "voxscribe-031001",
     "storage_bucket": "voxscribe-031001.appspot.com"
   },
@@ -22,7 +23,7 @@
           }
         },
         {
-          "client_id": "494688737824-f5k9i6mfcid7l67vjd1spe9rbptrfkue.apps.googleusercontent.com",
+          "client_id": "494688737824-qvqh8m0uga7hbc9ku8t3shuvnpo0keep.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
